@@ -1,78 +1,82 @@
-import React, { useRef, useEffect, useState } from 'react'
-import { FaPlus, FaTrash, FaEye, FaClipboardList } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
-import DifficultyStars from '../components/ui/DifficultyStars'
-import HomeButton from '../components/buttons/HomeButton'
-import BackButton from '../components/buttons/BackButton'
-import useRecettes from '../hooks/useRecettes'
-
+import React, { useRef, useEffect, useState } from "react";
+import { FaPlus, FaTrash, FaEye, FaClipboardList } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import DifficultyStars from "../components/ui/DifficultyStars";
+import HomeButton from "../components/buttons/HomeButton";
+import BackButton from "../components/buttons/BackButton";
+import useRecettes from "../hooks/useRecettes";
+import Footer from "../components/common/Footer";
 const DashboardPage = () => {
   // Référence pour le scroll
-  const dashboardRef = useRef(null)
+  const dashboardRef = useRef(null);
 
   // Utilisation de notre hook personnalisé
-  const { recettes, ajouterRecette, supprimerRecette, getRecettesUtilisateur } = useRecettes()
+  const { recettes, ajouterRecette, supprimerRecette, getRecettesUtilisateur } =
+    useRecettes();
 
   // État local pour la nouvelle recette
   const [nouvelleRecette, setNouvelleRecette] = useState({
-    titre: '',
-    description: '',
+    titre: "",
+    description: "",
     difficulte: 1,
-    tempsPreparation: '',
-    ingredients: [''],
-    instructions: [''],
-    imageUrl: '/images/newRecipes.webp',
-  })
+    tempsPreparation: "",
+    ingredients: [""],
+    instructions: [""],
+    imageUrl: "/images/newRecipes.webp",
+  });
 
   // Récupération du nom d'utilisateur
-  const nomUtilisateur = localStorage.getItem('username')
+  const nomUtilisateur = localStorage.getItem("username");
 
   // Récupération des recettes de l'utilisateur
-  const mesRecettes = getRecettesUtilisateur(nomUtilisateur)
+  const mesRecettes = getRecettesUtilisateur(nomUtilisateur);
 
   // Statistiques
   const stats = {
     totalRecettes: mesRecettes.length,
-  }
+  };
 
   // Effet pour le scroll
   useEffect(() => {
     if (dashboardRef.current) {
-      const yOffset = -30
-      const element = dashboardRef.current
-      const y = element.getBoundingClientRect().top + window.scrollY + yOffset
+      const yOffset = -30;
+      const element = dashboardRef.current;
+      const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
 
       window.scrollTo({
         top: y,
-        behavior: 'smooth',
-      })
+        behavior: "smooth",
+      });
     }
-  }, [])
+  }, []);
 
   // Gestionnaires d'événements
   const ajouterIngredient = () => {
-    setNouvelleRecette(prev => ({
+    setNouvelleRecette((prev) => ({
       ...prev,
-      ingredients: [...prev.ingredients, ''],
-    }))
-  }
+      ingredients: [...prev.ingredients, ""],
+    }));
+  };
 
   const ajouterInstruction = () => {
-    setNouvelleRecette(prev => ({
+    setNouvelleRecette((prev) => ({
       ...prev,
-      instructions: [...prev.instructions, ''],
-    }))
-  }
+      instructions: [...prev.instructions, ""],
+    }));
+  };
 
-  const handleSubmit = e => {
-    e.preventDefault()
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    if (!nouvelleRecette.titre?.trim() || !nouvelleRecette.description?.trim()) {
-      alert('Veuillez remplir tous les champs obligatoires')
-      return
+    if (
+      !nouvelleRecette.titre?.trim() ||
+      !nouvelleRecette.description?.trim()
+    ) {
+      alert("Veuillez remplir tous les champs obligatoires");
+      return;
     }
 
-    const newId = Date.now().toString()
+    const newId = Date.now().toString();
     const recetteFormatee = {
       id: newId,
       title: nouvelleRecette.titre,
@@ -80,42 +84,46 @@ const DashboardPage = () => {
       difficulty: nouvelleRecette.difficulte,
       prepTime: parseInt(nouvelleRecette.tempsPreparation),
       imageUrl: nouvelleRecette.imageUrl,
-      ingredients: nouvelleRecette.ingredients.filter(i => i?.trim() !== ''),
-      instructions: nouvelleRecette.instructions.filter(i => i?.trim() !== ''),
+      ingredients: nouvelleRecette.ingredients.filter((i) => i?.trim() !== ""),
+      instructions: nouvelleRecette.instructions.filter(
+        (i) => i?.trim() !== ""
+      ),
       likes: 0,
       views: 0,
-      category: 'Plat principal',
+      category: "Plat principal",
       author: nomUtilisateur,
       createdAt: new Date().toISOString(),
-    }
+    };
 
     // Utilisation de la fonction du hook pour ajouter la recette
-    ajouterRecette(recetteFormatee)
+    ajouterRecette(recetteFormatee);
 
     // Réinitialisation du formulaire
     setNouvelleRecette({
-      titre: '',
-      description: '',
+      titre: "",
+      description: "",
       difficulte: 1,
-      tempsPreparation: '',
-      ingredients: [''],
-      instructions: [''],
-      imageUrl: '/images/newRecipes.webp',
-    })
-  }
+      tempsPreparation: "",
+      ingredients: [""],
+      instructions: [""],
+      imageUrl: "/images/newRecipes.webp",
+    });
+  };
 
-  const handleSupprimer = id => {
-    if (window.confirm('Êtes-vous sûr de vouloir supprimer cette recette ?')) {
-      supprimerRecette(id)
+  const handleSupprimer = (id) => {
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer cette recette ?")) {
+      supprimerRecette(id);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-[#2C3639]/90 p-4 md:p-8" ref={dashboardRef}>
       {/* En-tête */}
       <header className="mb-8">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-4xl font-memoirs text-[#DCD7C9]">Tableau de bord</h1>
+          <h1 className="text-4xl font-memoirs text-[#DCD7C9]">
+            Tableau de bord
+          </h1>
           <div className="flex gap-4">
             <HomeButton />
             <BackButton />
@@ -140,8 +148,8 @@ const DashboardPage = () => {
                 type="text"
                 className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C]"
                 value={nouvelleRecette.titre}
-                onChange={e =>
-                  setNouvelleRecette(prev => ({
+                onChange={(e) =>
+                  setNouvelleRecette((prev) => ({
                     ...prev,
                     titre: e.target.value,
                   }))
@@ -157,8 +165,8 @@ const DashboardPage = () => {
               <div className="flex items-center">
                 <DifficultyStars
                   difficulty={nouvelleRecette.difficulte}
-                  onChange={niveau =>
-                    setNouvelleRecette(prev => ({
+                  onChange={(niveau) =>
+                    setNouvelleRecette((prev) => ({
                       ...prev,
                       difficulte: niveau,
                     }))
@@ -177,8 +185,8 @@ const DashboardPage = () => {
                 type="number"
                 className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C]"
                 value={nouvelleRecette.tempsPreparation}
-                onChange={e =>
-                  setNouvelleRecette(prev => ({
+                onChange={(e) =>
+                  setNouvelleRecette((prev) => ({
                     ...prev,
                     tempsPreparation: e.target.value,
                   }))
@@ -194,8 +202,8 @@ const DashboardPage = () => {
               <textarea
                 className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C] min-h-[100px]"
                 value={nouvelleRecette.description}
-                onChange={e =>
-                  setNouvelleRecette(prev => ({
+                onChange={(e) =>
+                  setNouvelleRecette((prev) => ({
                     ...prev,
                     description: e.target.value,
                   }))
@@ -214,13 +222,13 @@ const DashboardPage = () => {
                   type="text"
                   className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C] mb-2"
                   value={ingredient}
-                  onChange={e => {
-                    const newIngredients = [...nouvelleRecette.ingredients]
-                    newIngredients[index] = e.target.value
-                    setNouvelleRecette(prev => ({
+                  onChange={(e) => {
+                    const newIngredients = [...nouvelleRecette.ingredients];
+                    newIngredients[index] = e.target.value;
+                    setNouvelleRecette((prev) => ({
                       ...prev,
                       ingredients: newIngredients,
-                    }))
+                    }));
                   }}
                 />
               ))}
@@ -243,13 +251,13 @@ const DashboardPage = () => {
                   key={index}
                   className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C] mb-2 min-h-[80px]"
                   value={instruction}
-                  onChange={e => {
-                    const newInstructions = [...nouvelleRecette.instructions]
-                    newInstructions[index] = e.target.value
-                    setNouvelleRecette(prev => ({
+                  onChange={(e) => {
+                    const newInstructions = [...nouvelleRecette.instructions];
+                    newInstructions[index] = e.target.value;
+                    setNouvelleRecette((prev) => ({
                       ...prev,
                       instructions: newInstructions,
-                    }))
+                    }));
                   }}
                 />
               ))}
@@ -283,7 +291,7 @@ const DashboardPage = () => {
           </div>
 
           <div className="space-y-4">
-            {mesRecettes.map(recette => (
+            {mesRecettes.map((recette) => (
               <div
                 key={recette.id}
                 className="bg-[#3F4E4F] rounded-lg p-4 flex items-center gap-4"
@@ -294,7 +302,9 @@ const DashboardPage = () => {
                   className="w-20 h-20 object-cover rounded-lg"
                 />
                 <div className="flex-grow">
-                  <h3 className="text-[#DCD7C9] font-medium">{recette.title}</h3>
+                  <h3 className="text-[#DCD7C9] font-medium">
+                    {recette.title}
+                  </h3>
                   <div className="flex items-center gap-4 text-sm text-[#DCD7C9]/60">
                     <span>{recette.prepTime} min</span>
                     <span>{recette.views} vues</span>
@@ -321,8 +331,9 @@ const DashboardPage = () => {
           </div>
         </section>
       </div>
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default DashboardPage
+export default DashboardPage;

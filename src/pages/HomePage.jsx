@@ -3,7 +3,7 @@ import Header from "../components/common/Header";
 import RecipeCard from "../components/cards/RecipeCard";
 import Filtres from "../components/filters/Filtres";
 import useRecettes from "../hooks/useRecettes";
-
+import Footer from "../components/common/Footer";
 const HomePage = () => {
   const { recettes: recettesInitiales } = useRecettes();
   const [recettesFiltrees, setRecettesFiltrees] = useState([]);
@@ -39,6 +39,7 @@ const HomePage = () => {
           ))}
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
