@@ -97,6 +97,31 @@
 }
 
 @layer utilities {
+  /* Classes utilitaires pour les cartes */
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+
+  .icon-container {
+    @apply flex items-center gap-1;
+  }
+
+  .img-cover {
+    @apply w-full h-full object-cover;
+  }
+
+  .bg-linear-to-br {
+    @apply bg-gradient-to-br;
+  }
+
+  .bg-linear-to-t {
+    @apply bg-gradient-to-t;
+  }
+
   @keyframes pulse-scale {
     0% {
       transform: scale(1);
