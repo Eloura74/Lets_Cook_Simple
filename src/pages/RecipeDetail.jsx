@@ -2,122 +2,113 @@ import React from "react";
 import { useParams, Link } from "react-router-dom";
 import useRecettes from "../hooks/useRecettes";
 import DifficultyStars from "../components/ui/DifficultyStars";
-import BackButton from "../components/buttons/BackButton";
 
 const RecipeDetail = () => {
-  // Récupération de l'ID depuis l'URL
   const { id } = useParams();
+  const { recettes } = useRecettes();
+  const recette = recettes.find((r) => r.id === id);
 
-  // Utilisation de notre hook pour récupérer la recette
-  const { getRecetteById } = useRecettes();
-  const recette = getRecetteById(id);
-
-  // Si la recette n'est pas trouvée
+  // Si la recette n'existe pas
   if (!recette) {
     return (
-      <div className="min-h-screen background-principale flex flex-col items-center justify-center p-4">
-        <div className="bg-[#2C3639]/90 p-8 rounded-lg text-center">
-          <h2 className="text-2xl font-memoirs text-[#DCD7C9] mb-4">
+      <div className="min-h-screen background-principale p-4">
+        <div className="bg-[#2C3639]/90 rounded-lg p-8 max-w-2xl mx-auto mt-10">
+          <h2 className="text-2xl text-[#DCD7C9] text-center">
             Recette non trouvée
           </h2>
-          <p className="text-[#DCD7C9]/80 mb-6">
-            Désolé, cette recette n'existe pas ou a été supprimée.
-          </p>
-          <Link to="/" className="btn-site">
+          <Link to="/" className="btn-site block text-center mt-4">
             Retour à l'accueil
           </Link>
         </div>
       </div>
     );
   }
-  // Affichage de la recette
+
   return (
-    <div className="min-h-screen background-principale">
-      {/* En-tête */}
-      <header className="bg-[#2C3639]/25 py-8">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-4">
-            <BackButton />
-          </div>
-          <h1 className="text-4xl font-memoirs text-[#DCD7C9] text-center">
-            {recette.title}
-          </h1>
-        </div>
-      </header>
-
-      {/* Contenu principal */}
-      <main className="container mx-auto px-4 py-8">
-        <div className="bg-[#2C3639]/90 rounded-lg shadow-xl overflow-hidden">
-          {/* Image de la recette */}
-          <div className="relative h-96">
-            <img
-              src={recette.imageUrl}
-              alt={recette.title}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "/images/newRecipes.webp";
-              }}
-            />
-          </div>
-
-          {/* Informations de la recette */}
-          <div className="p-6">
-            {/* En-tête avec difficulté et temps */}
-            <div className="flex justify-between items-center mb-6">
-              <div className="flex items-center gap-2">
-                <DifficultyStars difficulty={recette.difficulty} />
+    <div className="min-h-screen background-principale p-4">
+      {/* Carrousel des recettes similaires */}
+      <div className="recipe-carousel mx-auto ">
+        {recettes.slice(0, 3).map((r) => (
+          <Link
+            key={r.id}
+            to={`/recette/${r.id}`}
+            className="flex-shrink-0 w-64 bg-[#2C3639]/90 rounded-lg overflow-hidden hover:scale-[1.02] transition-transform duration-300"
+          >
+            <div className="relative h-40">
+              <img
+                src={r.imageUrl}
+                alt={r.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-2 left-2">
+                <DifficultyStars difficulty={r.difficulty} />
               </div>
-              <span className="text-[#DCD7C9]">{recette.prepTime} minutes</span>
             </div>
-
-            {/* Description */}
-            <p className="text-[#DCD7C9]/80 mb-8">{recette.description}</p>
-
-            {/* Ingrédients */}
-            <div className="mb-8">
-              <h2 className="text-2xl font-memoirs text-[#DCD7C9] mb-4">
-                Ingrédients
-              </h2>
-              <ul className="list-disc list-inside space-y-2">
-                {recette.ingredients.map((ingredient, index) => (
-                  <li key={index} className="text-[#DCD7C9]/80">
-                    {ingredient}
-                  </li>
-                ))}
-              </ul>
+            <div className="p-2">
+              <h3 className="text-[#DCD7C9] text-sm font-semibold line-clamp-2">
+                {r.title}
+              </h3>
             </div>
+          </Link>
+        ))}
+      </div>
 
-            {/* Instructions */}
-            <div>
-              <h2 className="text-2xl font-memoirs text-[#DCD7C9] mb-4">
-                Instructions
-              </h2>
-              <ol className="space-y-4">
-                {recette.instructions.map((instruction, index) => (
-                  <li key={index} className="flex gap-4">
-                    <span className="flex-shrink-0 w-8 h-8 flex-center bg-[#A27B5C] rounded-full text-[#DCD7C9]">
-                      {index + 1}
-                    </span>
-                    <p className="text-[#DCD7C9]/80 flex-1">{instruction}</p>
-                  </li>
-                ))}
-              </ol>
-            </div>
-
-            {/* Informations supplémentaires */}
-            <div className="mt-8 pt-6 border-t border-[#A27B5C]/20">
-              <div className="flex justify-between text-sm text-[#DCD7C9]/60">
-                <span>Par {recette.author}</span>
-                <div className="flex gap-4">
-                  <span>{recette.views} vues</span>
-                  <span>{recette.likes} likes</span>
-                </div>
-              </div>
+      {/* Détail de la recette */}
+      <div className="max-w-4xl mx-auto bg-[#2C3639]/90 rounded-lg overflow-hidden mt-4">
+        {/* Image et titre */}
+        <div className="recipe-detail-image">
+          <img
+            src={recette.imageUrl}
+            alt={recette.title}
+            className="recipe-detail-image img"
+          />
+          <div className="recipe-detail-gradient" />
+          <div className="recipe-detail-title">
+            <h1 className="text-4xl text-[#DCD7C9] font-bold mb-2">
+              {recette.title}
+            </h1>
+            <div className="flex gap-4">
+              <DifficultyStars difficulty={recette.difficulty} />
             </div>
           </div>
         </div>
-      </main>
+
+        {/* Contenu de la recette */}
+        <div className="recipe-detail-section">
+          {/* Description */}
+          <div>
+            <h2 className="recipe-detail-heading">Description</h2>
+            <p className="recipe-detail-text">{recette.description}</p>
+          </div>
+
+          {/* Ingrédients */}
+          <div>
+            <h2 className="recipe-detail-heading">Ingrédients</h2>
+            <ul className="list-disc pl-6 recipe-detail-text space-y-2">
+              {recette.ingredients?.map((ingredient, index) => (
+                <li key={index}>{ingredient}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Instructions */}
+          <div>
+            <h2 className="recipe-detail-heading">Instructions</h2>
+            <ol className="list-decimal pl-6 recipe-detail-text space-y-2">
+              {recette.instructions?.map((instruction, index) => (
+                <li key={index}>{instruction}</li>
+              ))}
+            </ol>
+          </div>
+
+          {/* Bouton retour */}
+          <div className="text-center pt-4">
+            <Link to="/" className="btn-site inline-block">
+              Retour à l'accueil
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

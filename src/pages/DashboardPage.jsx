@@ -111,40 +111,34 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className="space-y-8 w-full" ref={dashboardRef}>
+    <div className="min-h-screen bg-[#2C3639]/90 p-4 md:p-8" ref={dashboardRef}>
       {/* En-tête */}
-      <header className="flex items-center flex-col bg-[#2C3639]/25 rounded-4xl shadow-lg shadow-[#4A403A]">
-        <div>
-          <h1 className="text-5xl font-memoirs text-[#DCD7C9] [text-shadow:_2px_2px_4px_rgba(0,0,0,0.8)] mt-6">
-            Tableau de bord
-          </h1>
-        </div>
-        <div className="flex items-center gap-17 p-14 pb-8">
-          <div className="w-32">
+      <header className="mb-8">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-4xl font-memoirs text-[#DCD7C9]">Tableau de bord</h1>
+          <div className="flex gap-4">
             <HomeButton />
-          </div>
-          <div className="w-32 flex justify-end">
             <BackButton />
           </div>
         </div>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Colonne de gauche - Création de recette */}
-        <section className="bg-[#2C3639]/95 backdrop-blur-sm rounded-lg p-6 shadow-xl shadow-[#4A403A]/90 space-y-6">
-          <h2 className="text-3xl text-center font-memoirs text-[#DCD7C9] border-t border-[#A27B5C]/60 border-b border-[#A27B5C] pb-2 [text-shadow:_2px_2px_4px_rgba(0,0,0,0.5)]">
+        <section className="bg-[#2C3639] rounded-xl p-6 shadow-lg">
+          <h2 className="text-2xl font-memoirs text-[#DCD7C9] mb-6 pb-2 border-b border-[#A27B5C]/30">
             Créer une nouvelle recette
           </h2>
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* Titre */}
-            <div>
-              <label className="title-dashboard-create">
+            <div className="space-y-2">
+              <label className="block text-[#DCD7C9] text-sm font-medium">
                 Titre de la recette
               </label>
               <input
                 type="text"
-                className="inputDashboard"
+                className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C]"
                 value={nouvelleRecette.titre}
                 onChange={e =>
                   setNouvelleRecette(prev => ({
@@ -156,12 +150,11 @@ const DashboardPage = () => {
             </div>
 
             {/* Difficulté */}
-            <div className="border-t border-[#A27B5C] pt-2">
-              <label className="title-dashboard-create">Difficulté</label>
-              <p className="text-[#DCD7C9]/50 text-xs pl-6 mb-2">
-                Sélectionnez une difficulté en cliquant sur les étoiles
-              </p>
-              <div className="w-full flex justify-center bg-transparent">
+            <div className="space-y-2">
+              <label className="block text-[#DCD7C9] text-sm font-medium">
+                Difficulté
+              </label>
+              <div className="flex items-center">
                 <DifficultyStars
                   difficulty={nouvelleRecette.difficulte}
                   onChange={niveau =>
@@ -176,13 +169,13 @@ const DashboardPage = () => {
             </div>
 
             {/* Temps de préparation */}
-            <div className="border-t border-[#A27B5C] pt-2">
-              <label className="title-dashboard-create">
+            <div className="space-y-2">
+              <label className="block text-[#DCD7C9] text-sm font-medium">
                 Temps de préparation (minutes)
               </label>
               <input
                 type="number"
-                className="inputDashboard"
+                className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C]"
                 value={nouvelleRecette.tempsPreparation}
                 onChange={e =>
                   setNouvelleRecette(prev => ({
@@ -193,49 +186,13 @@ const DashboardPage = () => {
               />
             </div>
 
-            {/* Image URL */}
-            <div className="border-t border-[#A27B5C] pt-2">
-              <label className="title-dashboard-create">URL de l'image</label>
-              <input
-                type="text"
-                className="inputDashboard"
-                placeholder="URL de l'image"
-                value={nouvelleRecette.imageUrl}
-                onChange={e =>
-                  setNouvelleRecette(prev => ({
-                    ...prev,
-                    imageUrl: e.target.value,
-                  }))
-                }
-              />
-              <p className="text-[#DCD7C9]/50 text-sm mt-1">
-                Ne pas modifier pour utiliser l'image par défaut
-              </p>
-            </div>
-
-            {/* Aperçu de l'image */}
-            <div>
-              <label className="title-dashboard-create text-center">
-                Aperçu de l'image
-              </label>
-              <div className="relative w-full h-48 bg-[#3F4E4F] rounded-lg overflow-hidden shadow-xl shadow-[#4A403A]/90">
-                <img
-                  src={nouvelleRecette.imageUrl}
-                  alt="Aperçu"
-                  className="img-cover"
-                  onError={e => {
-                    e.target.onerror = null
-                    e.target.src = '/images/newRecipes.webp'
-                  }}
-                />
-              </div>
-            </div>
-
             {/* Description */}
-            <div className="border-t border-[#A27B5C] pt-2">
-              <label className="title-dashboard-create">Description</label>
+            <div className="space-y-2">
+              <label className="block text-[#DCD7C9] text-sm font-medium">
+                Description
+              </label>
               <textarea
-                className="inputDashboard min-h-[100px]"
+                className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C] min-h-[100px]"
                 value={nouvelleRecette.description}
                 onChange={e =>
                   setNouvelleRecette(prev => ({
@@ -247,137 +204,122 @@ const DashboardPage = () => {
             </div>
 
             {/* Ingrédients */}
-            <div className="border-t border-[#A27B5C] pt-2">
-              <label className="title-dashboard-create">Ingrédients</label>
-              <div className="space-y-2">
-                {nouvelleRecette.ingredients.map((ingredient, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    className="inputDashboard"
-                    value={ingredient}
-                    onChange={e => {
-                      const newIngredients = [...nouvelleRecette.ingredients]
-                      newIngredients[index] = e.target.value
-                      setNouvelleRecette(prev => ({
-                        ...prev,
-                        ingredients: newIngredients,
-                      }))
-                    }}
-                  />
-                ))}
-                <button
-                  type="button"
-                  onClick={ajouterIngredient}
-                  className="btn-site flex items-center gap-2"
-                >
-                  <FaPlus /> Ajouter un ingrédient
-                </button>
-              </div>
+            <div className="space-y-2">
+              <label className="block text-[#DCD7C9] text-sm font-medium">
+                Ingrédients
+              </label>
+              {nouvelleRecette.ingredients.map((ingredient, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C] mb-2"
+                  value={ingredient}
+                  onChange={e => {
+                    const newIngredients = [...nouvelleRecette.ingredients]
+                    newIngredients[index] = e.target.value
+                    setNouvelleRecette(prev => ({
+                      ...prev,
+                      ingredients: newIngredients,
+                    }))
+                  }}
+                />
+              ))}
+              <button
+                type="button"
+                onClick={ajouterIngredient}
+                className="flex items-center gap-2 text-[#A27B5C] hover:text-[#DCD7C9] transition-colors"
+              >
+                <FaPlus /> Ajouter un ingrédient
+              </button>
             </div>
 
             {/* Instructions */}
-            <div className="border-t border-[#A27B5C] pt-2 pb-6 border-b border-[#A27B5C]">
-              <label className="title-dashboard-create text-center">
+            <div className="space-y-2">
+              <label className="block text-[#DCD7C9] text-sm font-medium">
                 Instructions
               </label>
-              <div className="space-y-2">
-                {nouvelleRecette.instructions.map((instruction, index) => (
-                  <div key={index} className="flex gap-2 items-start">
-                    <span className="flex-shrink-0 w-6 h-6 flex-center bg-[#A27B5C] rounded-full text-[#DCD7C9] text-sm">
-                      {index + 1}
-                    </span>
-                    <textarea
-                      className="flex-grow bg-[#3F4E4F] text-[#DCD7C9] rounded-lg p-2 border border-[#DCD7C9]/10 focus:border-[#A27B5C] focus:ring-1 focus:ring-[#A27B5C] outline-none min-h-[60px] inputDashboard"
-                      value={instruction}
-                      onChange={e => {
-                        const newInstructions = [...nouvelleRecette.instructions]
-                        newInstructions[index] = e.target.value
-                        setNouvelleRecette(prev => ({
-                          ...prev,
-                          instructions: newInstructions,
-                        }))
-                      }}
-                    />
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={ajouterInstruction}
-                  className="btn-site flex items-center gap-2"
-                >
-                  <FaPlus /> Ajouter une instruction
-                </button>
-              </div>
+              {nouvelleRecette.instructions.map((instruction, index) => (
+                <textarea
+                  key={index}
+                  className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C] mb-2 min-h-[80px]"
+                  value={instruction}
+                  onChange={e => {
+                    const newInstructions = [...nouvelleRecette.instructions]
+                    newInstructions[index] = e.target.value
+                    setNouvelleRecette(prev => ({
+                      ...prev,
+                      instructions: newInstructions,
+                    }))
+                  }}
+                />
+              ))}
+              <button
+                type="button"
+                onClick={ajouterInstruction}
+                className="flex items-center gap-2 text-[#A27B5C] hover:text-[#DCD7C9] transition-colors"
+              >
+                <FaPlus /> Ajouter une instruction
+              </button>
             </div>
 
-            {/* Bouton de soumission */}
             <button
               type="submit"
-              className="btn-site flex items-center gap-2 justify-center w-full"
+              className="w-full bg-[#A27B5C] text-[#DCD7C9] py-3 rounded-lg hover:bg-[#A27B5C]/80 transition-colors font-medium"
             >
               Créer la recette
             </button>
           </form>
         </section>
 
-        {/* Colonne de droite */}
-        <div className="space-y-8">
-          {/* Liste des recettes */}
-          <section className="bg-[#2C3639]/95 backdrop-blur-sm rounded-lg p-6 shadow-lg space-y-6">
-            <h2 className="text-3xl text-center font-memoirs text-[#DCD7C9] border-t border-[#A27B5C]/60 border-b border-[#A27B5C] pb-2 [text-shadow:_2px_2px_4px_rgba(0,0,0,0.5)]">
+        {/* Colonne de droite - Mes recettes */}
+        <section className="bg-[#2C3639] rounded-xl p-6 shadow-lg">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-memoirs text-[#DCD7C9]">
               Mes recettes récentes
             </h2>
+            <span className="text-[#DCD7C9] text-sm">
+              Total : {stats.totalRecettes} recettes
+            </span>
+          </div>
 
-            {/* Total des recettes */}
-            <div className="flex items-center justify-center w-fit mx-auto flex-wrap gap-3 p-4 rounded-full border-b border-[#A27B5C]/60 pb-2">
-              <FaClipboardList className="w-6 h-6 text-[#DCD7C9]" />
-              <span className="text-[#DCD7C9] text-lg">
-                Total : {stats.totalRecettes} recettes
-              </span>
-            </div>
-
-            {/* Liste des recettes */}
-            <div className="space-y-4">
-              {mesRecettes.map(recette => (
-                <div
-                  key={recette.id}
-                  className="bg-[#3F4E4F] rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow duration-200"
-                >
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <h3 className="text-xl font-memoirs text-[#DCD7C9]">
-                        {recette.title}
-                      </h3>
-                      <p className="text-[#DCD7C9]/80 text-sm mt-1">
-                        {recette.description}
-                      </p>
-                      <div className="flex items-center gap-4 mt-2 text-[#DCD7C9]/60 text-sm">
-                        <span>{recette.prepTime} min</span>
-                        <span>{recette.views} vues</span>
-                        <span>{recette.likes} likes</span>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Link
-                        to={`/recette/${recette.id}`}
-                        className="p-2 text-[#DCD7C9] hover:text-[#A27B5C] transition-colors"
-                      >
-                        <FaEye />
-                      </Link>
-                      <button
-                        onClick={() => handleSupprimer(recette.id)}
-                        className="p-2 text-red-500 hover:text-red-700 transition-colors"
-                      >
-                        <FaTrash />
-                      </button>
-                    </div>
+          <div className="space-y-4">
+            {mesRecettes.map(recette => (
+              <div
+                key={recette.id}
+                className="bg-[#3F4E4F] rounded-lg p-4 flex items-center gap-4"
+              >
+                <img
+                  src={recette.imageUrl}
+                  alt={recette.title}
+                  className="w-20 h-20 object-cover rounded-lg"
+                />
+                <div className="flex-grow">
+                  <h3 className="text-[#DCD7C9] font-medium">{recette.title}</h3>
+                  <div className="flex items-center gap-4 text-sm text-[#DCD7C9]/60">
+                    <span>{recette.prepTime} min</span>
+                    <span>{recette.views} vues</span>
+                    <span>{recette.likes} likes</span>
                   </div>
+                  <DifficultyStars difficulty={recette.difficulty} />
                 </div>
-              ))}
-            </div>
-          </section>
-        </div>
+                <div className="flex gap-2">
+                  <Link
+                    to={`/recipe/${recette.id}`}
+                    className="p-2 text-[#DCD7C9] hover:text-[#A27B5C] transition-colors"
+                  >
+                    <FaEye />
+                  </Link>
+                  <button
+                    onClick={() => handleSupprimer(recette.id)}
+                    className="p-2 text-[#DCD7C9] hover:text-red-500 transition-colors"
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   )

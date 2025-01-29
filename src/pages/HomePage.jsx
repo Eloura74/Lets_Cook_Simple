@@ -21,7 +21,7 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen background-principale">
-      <Header />
+      {/* <Header /> */}
 
       {/* Filtres */}
       <Filtres onFiltrer={gererFiltrage} />
