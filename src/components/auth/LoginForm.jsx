@@ -1,23 +1,23 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { FaUser, FaLock } from 'react-icons/fa'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaUser, FaLock } from "react-icons/fa";
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const navigate = useNavigate()
+  const [username, setUsername] = useState(""); // State pour le nom d'utilisateur
+  const [password, setPassword] = useState(""); // State pour le mot de passe
+  const navigate = useNavigate(); // Hook pour la navigation
 
   const handleLogin = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // Version simplifiée de la connexion
     if (username && password) {
-      localStorage.setItem('isLoggedIn', 'true')
-      localStorage.setItem('username', username)
-      navigate('/dashboard')
+      localStorage.setItem("isLoggedIn", "true"); // Stocke l'état de connexion
+      localStorage.setItem("username", username); // Stocke le nom d'utilisateur
+      navigate("/dashboard"); // Redirige vers la page de dashboard
     } else {
-      alert('Veuillez remplir tous les champs')
+      alert("Veuillez remplir tous les champs"); // Affiche un message d'erreur
     }
-  }
+  };
 
   return (
     <main className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] flex justify-center items-center bg-[#2C3639]/95 p-4 z-50">
@@ -62,7 +62,7 @@ const LoginForm = () => {
         </button>
       </form>
     </main>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

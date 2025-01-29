@@ -1,33 +1,33 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import SearchBar from '../ui/SearchBar'
-import HomeButton from '../buttons/HomeButton'
-import DashboardButton from '../buttons/Dashboard'
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import SearchBar from "../ui/SearchBar";
+import HomeButton from "../buttons/HomeButton";
+import DashboardButton from "../buttons/Dashboard";
 import {
   FaBars,
   FaTimes,
   FaUser,
   FaUserPlus,
   FaSignOutAlt,
-} from 'react-icons/fa'
+} from "react-icons/fa";
 
 const Header = () => {
   // États et hooks
-  const [menuOuvert, setMenuOuvert] = useState(false)
-  const navigate = useNavigate()
-  
+  const [menuOuvert, setMenuOuvert] = useState(false); // Menu de navigation
+  const navigate = useNavigate(); // Hook pour la navigation
+
   // Vérifier si l'utilisateur est connecté
-  const estConnecte = localStorage.getItem('isLoggedIn') === 'true'
-  const nomUtilisateur = localStorage.getItem('username')
+  const estConnecte = localStorage.getItem("isLoggedIn") === "true";
+  const nomUtilisateur = localStorage.getItem("username");
 
   // Fonctions
-  const toggleMenu = () => setMenuOuvert(!menuOuvert)
+  const toggleMenu = () => setMenuOuvert(!menuOuvert);
 
   const deconnexion = () => {
-    localStorage.removeItem('isLoggedIn')
-    localStorage.removeItem('username')
-    navigate('/')
-  }
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("username");
+    navigate("/");
+  };
 
   return (
     <header className="bg-white w-full">
@@ -40,7 +40,7 @@ const Header = () => {
                 <span>Bienvenue</span>
                 <strong className="text-lg sm:text-xl md:text-2xl font-bold text-[#A27B5C] [text-shadow:_1px_1px_2px_rgba(0,0,0,0.8)]">
                   {nomUtilisateur}
-                  {' ! '}
+                  {" ! "}
                 </strong>
               </>
             ) : (
@@ -68,7 +68,7 @@ const Header = () => {
             <button
               onClick={toggleMenu}
               className="md:hidden p-2 text-white"
-              aria-label={menuOuvert ? 'Fermer le menu' : 'Ouvrir le menu'}
+              aria-label={menuOuvert ? "Fermer le menu" : "Ouvrir le menu"}
             >
               {menuOuvert ? <FaTimes size={24} /> : <FaBars size={24} />}
             </button>
@@ -100,7 +100,7 @@ const Header = () => {
           {/* Menu mobile */}
           <div
             className={`md:hidden transition-all duration-300 ${
-              menuOuvert ? 'block' : 'hidden'
+              menuOuvert ? "block" : "hidden"
             } mt-4 space-y-2`}
           >
             <HomeButton />
@@ -138,8 +138,8 @@ const Header = () => {
               ),
               url("/images/header2.png")
             `,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         >
           <div className="absolute inset-0 bg-black/50" />
@@ -157,7 +157,7 @@ const Header = () => {
         </section>
       </nav>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

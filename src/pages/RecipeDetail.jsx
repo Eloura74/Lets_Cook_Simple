@@ -1,16 +1,16 @@
-import React from 'react'
-import { useParams, Link } from 'react-router-dom'
-import useRecettes from '../hooks/useRecettes'
-import DifficultyStars from '../components/ui/DifficultyStars'
-import BackButton from '../components/buttons/BackButton'
+import React from "react";
+import { useParams, Link } from "react-router-dom";
+import useRecettes from "../hooks/useRecettes";
+import DifficultyStars from "../components/ui/DifficultyStars";
+import BackButton from "../components/buttons/BackButton";
 
 const RecipeDetail = () => {
   // Récupération de l'ID depuis l'URL
-  const { id } = useParams()
-  
+  const { id } = useParams();
+
   // Utilisation de notre hook pour récupérer la recette
-  const { getRecetteById } = useRecettes()
-  const recette = getRecetteById(id)
+  const { getRecetteById } = useRecettes();
+  const recette = getRecetteById(id);
 
   // Si la recette n'est pas trouvée
   if (!recette) {
@@ -28,9 +28,9 @@ const RecipeDetail = () => {
           </Link>
         </div>
       </div>
-    )
+    );
   }
-
+  // Affichage de la recette
   return (
     <div className="min-h-screen background-principale">
       {/* En-tête */}
@@ -55,8 +55,8 @@ const RecipeDetail = () => {
               alt={recette.title}
               className="w-full h-full object-cover"
               onError={(e) => {
-                e.target.onerror = null
-                e.target.src = '/images/newRecipes.webp'
+                e.target.onerror = null;
+                e.target.src = "/images/newRecipes.webp";
               }}
             />
           </div>
@@ -119,7 +119,7 @@ const RecipeDetail = () => {
         </div>
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default RecipeDetail
+export default RecipeDetail;
