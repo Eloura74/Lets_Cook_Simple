@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-attachment: fixed;
+  }
+
+  h1 {
+    @apply text-2xl font-bold md:text-3xl;
+  }
+
+  h2 {
+    @apply text-xl font-semibold md:text-2xl;
+  }
+}
+
+@layer components {
+  .background-principale {
+    background: linear-gradient(to right, #2c3639, #3f4e4f, #a27b5c);
+  }
+
+  .btn-site {
+    @apply flex items-center gap-2 px-4 py-2 bg-[#3F4E4F] text-white rounded-lg hover:bg-[#2C3639] transition-colors duration-200 shadow-md;
+  }
+
+  .nav-btn {
+    @apply flex items-center gap-2 px-4 py-2 text-white rounded-lg hover:bg-[#2C3639]/50 transition-colors duration-200;
+  }
+
+  .recipe-card {
+    @apply relative flex flex-col bg-gradient-to-br from-[#2C3639]/90 to-[#3F4E4F] rounded-2xl border border-white/10 shadow-xl shadow-[#4A403A]/90 group transition-all duration-300 h-full cursor-pointer;
+  }
+
+  .recipe-card-image {
+    @apply relative h-40 sm:h-48 overflow-hidden;
+  }
+
+  .recipe-card-image::before {
+    content: "";
+    @apply absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10;
+  }
+
+  .recipe-card-image img {
+    @apply w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 rounded-t-2xl;
+  }
+
+  .badge-gratuit {
+    animation: pulse-scale 2s ease-in-out infinite, glow 2s ease-in-out infinite;
+  }
+
+  .img-cover {
+    @apply w-full h-full object-cover;
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+
+  .icon-container {
+    @apply flex items-center gap-1;
+  }
+
+  .text-content {
+    @apply text-[#DCD7C9];
+  }
+
+  a {
+    @apply font-medium text-[#2d2d2d] border border-[#2d2d2d] rounded-lg px-4 py-2 no-underline shadow-md hover:text-[#a27b5c] transition-colors duration-200;
+  }
+
+  a.logo-link {
+    @apply border-none p-0 shadow-none cursor-default;
+  }
+}
+
+@layer utilities {
+  @keyframes pulse-scale {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes glow {
+    0% {
+      box-shadow: 0 0 5px rgba(239, 68, 68, 0.5), 0 0 10px rgba(239, 68, 68, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 30px rgba(239, 68, 68, 0.5);
+    }
+    100% {
+      box-shadow: 0 0 5px rgba(239, 68, 68, 0.5), 0 0 10px rgba(239, 68, 68, 0.3);
+    }
+  }
+}
