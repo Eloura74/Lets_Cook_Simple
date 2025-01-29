@@ -1,0 +1,338 @@
+[
+  {
+    "id": "recipe-01",
+    "title": "Burger Classique",
+    "difficulty": 2,
+    "category": "Snack",
+    "description": "Un burger savoureux avec une touche classique. Ingrédients frais et un steak juteux pour une expérience culinaire inoubliable.",
+    "ingredients": [
+      "nihil velit quo",
+      "explicabo et fugit",
+      "molestiae ut repudiandae",
+      "quisquam recusandae nemo",
+      "deleniti commodi eos"
+    ],
+    "instructions": [
+      "pariatur accusamus iure",
+      "rerum eum quia",
+      "aut atque nihil",
+      "exercitationem fugiat reiciendis",
+      "nostrum rem sit"
+    ],
+    "imageUrl": "https://i.imgur.com/mOE7QMP.png",
+    "date": "2025-02-02",
+    "author": "john Doe",
+    "prepTime": 30,
+    "likes": 152,
+    "views": 1045,
+    "vues": 1045
+  },
+  {
+    "id": "recipe-02",
+    "title": "Tacos Festifs",
+    "difficulty": 3,
+    "category": "Snack",
+    "description": "Des tacos colorés et pleins de saveurs, avec une garniture riche et une sauce épicée maison.",
+    "ingredients": [
+      "doloribus dignissimos enim",
+      "rerum voluptatum dolorem",
+      "repellat veniam quia",
+      "non aspernatur neque",
+      "ut fugit repellendus"
+    ],
+    "instructions": [
+      "et sed iste",
+      "nisi commodi non",
+      "et rerum aut",
+      "ut hic atque",
+      "laborum suscipit sed"
+    ],
+    "imageUrl": "https://i.imgur.com/NWcAneH.png",
+    "date": "2026-02-22",
+    "author": "john Doe",
+    "prepTime": 45,
+    "likes": 200,
+    "views": 1342,
+    "vues": 1342
+  },
+  {
+    "id": "recipe-03",
+    "title": "Pizza Margherita",
+    "difficulty": 2,
+    "category": "Snack",
+    "description": "Une pizza simple mais élégante, avec de la mozzarella fraîche, des tomates et du basilic.",
+    "ingredients": [
+      "exercitationem fuga et",
+      "ea delectus error",
+      "consequatur qui rerum",
+      "pariatur nemo soluta",
+      "delectus temporibus est"
+    ],
+    "instructions": [
+      "beatae tempora repellat",
+      "aut at molestiae",
+      "consectetur cum ea",
+      "consectetur omnis omnis",
+      "itaque blanditiis enim"
+    ],
+    "imageUrl": "https://i.imgur.com/TcMNnAg.png",
+    "date": "2024-11-22",
+    "author": "john Doe",
+    "prepTime": 20,
+    "likes": 180,
+    "views": 1120,
+    "vues": 1120
+  },
+  {
+    "id": "recipe-04",
+    "title": "Pâtes Carbonara",
+    "difficulty": 3,
+    "category": "Divers",
+    "description": "Un plat classique italien avec des pâtes, une sauce crémeuse au fromage, des lardons et du poivre noir.",
+    "ingredients": [
+      "et soluta dolor",
+      "optio ut voluptas",
+      "mollitia aut doloremque",
+      "voluptate culpa qui",
+      "et enim cum"
+    ],
+    "instructions": [
+      "sit laboriosam ipsum",
+      "quia est tempora",
+      "sit voluptatibus dicta",
+      "eveniet est excepturi",
+      "omnis assumenda cupiditate"
+    ],
+    "imageUrl": "https://i.imgur.com/nVngTYO.png",
+    "date": "2021-02-22",
+    "author": "john Doe",
+    "prepTime": 25,
+    "likes": 250,
+    "views": 1450,
+    "vues": 1450
+  },
+  {
+    "id": "recipe-05",
+    "title": "Salade César",
+    "difficulty": 1,
+    "category": "Salade",
+    "description": "Une salade légère et croquante avec des morceaux de poulet grillé, des croûtons et une vinaigrette César.",
+    "ingredients": [
+      "ut quaerat numquam",
+      "corrupti et ducimus",
+      "quasi est dolorum",
+      "error perferendis ea",
+      "nisi dolorem velit"
+    ],
+    "instructions": [
+      "nostrum ut omnis",
+      "laudantium animi deserunt",
+      "ab ut consectetur",
+      "quisquam ab laudantium",
+      "incidunt qui laudantium"
+    ],
+    "imageUrl": "https://i.imgur.com/wsBUgIS.png",
+    "date": "2025-02-22",
+    "author": "john Doe",
+    "prepTime": 15,
+    "likes": 300,
+    "views": 1820,
+    "vues": 1820
+  },
+  {
+    "id": "recipe-06",
+    "title": "Poulet Frit",
+    "difficulty": 4,
+    "category": "Snack",
+    "description": "Un poulet frais avec une sauce riche et une mélange de saveurs.",
+    "ingredients": [
+      "modi voluptate ratione",
+      "sed et porro",
+      "vero porro maxime",
+      "reprehenderit optio optio",
+      "et vel eaque"
+    ],
+    "instructions": [
+      "dolor mollitia quasi",
+      "unde debitis est",
+      "nesciunt mollitia officiis",
+      "nisi perferendis ea",
+      "omnis quibusdam aut"
+    ],
+    "imageUrl": "https://i.imgur.com/KP8ytNg.png",
+    "date": "2024-02-28",
+    "author": "john Doe",
+    "prepTime": 40,
+    "likes": 220,
+    "views": 1670,
+    "vues": 1670
+  },
+  {
+    "id": "recipe-07",
+    "title": "Soupe de Tomate",
+    "difficulty": 1,
+    "category": "Soupe",
+    "description": "Une soupe de tomate onctueuse et réconfortante, parfaite pour les soirées froides.",
+    "ingredients": [
+      "ullam et aut",
+      "velit distinctio ipsum",
+      "cum totam iusto",
+      "exercitationem est rerum",
+      "iusto aspernatur porro"
+    ],
+    "instructions": [
+      "nobis est qui",
+      "totam quo error",
+      "consequatur expedita tempora",
+      "nostrum aliquid et",
+      "minus qui aut"
+    ],
+    "imageUrl": "https://i.imgur.com/tpEhz1w.png",
+    "date": "2024-12-22",
+    "author": "john Doe",
+    "prepTime": 30,
+    "likes": 180,
+    "views": 1200,
+    "vues": 1200
+  },
+  {
+    "id": "recipe-08",
+    "title": "Sushis",
+    "difficulty": 4,
+    "category": "Divers",
+    "description": "Des sushis frais avec une sauce riche et un mélange de saveurs.",
+    "ingredients": [
+      "hic aliquam et",
+      "autem odit est",
+      "nemo aut iusto",
+      "reprehenderit molestias et",
+      "et et nulla"
+    ],
+    "instructions": [
+      "in et aspernatur",
+      "autem dolores at",
+      "esse eius aliquid",
+      "recusandae ea earum",
+      "assumenda est sed"
+    ],
+    "imageUrl": "https://i.imgur.com/YAKPFDc.png",
+    "date": "2024-07-22",
+    "author": "john Doe",
+    "prepTime": 50,
+    "likes": 400,
+    "views": 2500,
+    "vues": 2500
+  },
+  {
+    "id": "recipe-09",
+    "title": "Crêpes au Chocolat",
+    "difficulty": 2,
+    "category": "Dessert",
+    "description": "Des crêpes douces et moelleuses avec une garniture riche en chocolat et des fruits frais.",
+    "ingredients": [
+      "qui nihil voluptatem",
+      "aperiam odit natus",
+      "sit provident tempore",
+      "aliquam eos qui",
+      "aut mollitia repellendus"
+    ],
+    "instructions": [
+      "sed ut et",
+      "exercitationem harum aliquid",
+      "eos hic iste",
+      "suscipit in voluptatum",
+      "adipisci eum repellat"
+    ],
+    "imageUrl": "https://i.imgur.com/syIMy8s.png",
+    "date": "2023-02-22",
+    "author": "john Doe",
+    "prepTime": 25,
+    "likes": 190,
+    "views": 1300,
+    "vues": 1300
+  },
+  {
+    "id": "recipe-10",
+    "title": "Glace au Chocolat",
+    "difficulty": 3,
+    "category": "Dessert",
+    "description": "Un fondant riche et leger, avec une crème au chocolat et une mélange de fruits frais.",
+    "ingredients": [
+      "ut sint quia",
+      "ut dolorem sunt",
+      "et perferendis et",
+      "maxime alias quos",
+      "corporis officia hic"
+    ],
+    "instructions": [
+      "odio consequatur a",
+      "omnis molestiae et",
+      "incidunt dignissimos temporibus",
+      "quibusdam non error",
+      "iure illo voluptate"
+    ],
+    "imageUrl": "https://i.imgur.com/glqVGyG.png",
+    "date": "2024-05-22",
+    "author": "john Doe",
+    "prepTime": 15,
+    "likes": 210,
+    "views": 1400,
+    "vues": 1400
+  },
+  {
+    "id": "recipe-11",
+    "title": "Tiramisu",
+    "difficulty": 4,
+    "category": "Dessert",
+    "description": "Un tiramisu au fromage frais, avec une crème au mascarpone et des mélanges de sucre et de fraïcheur.",
+    "ingredients": [
+      "praesentium quia et",
+      "possimus voluptatem et",
+      "laborum aut quas",
+      "minus iusto et",
+      "et illo necessitatibus"
+    ],
+    "instructions": [
+      "amet fugiat possimus",
+      "nostrum qui neque",
+      "nostrum veniam eaque",
+      "quia maxime repellendus",
+      "laborum cumque id"
+    ],
+    "imageUrl": "https://i.imgur.com/UDX4Uyq.png",
+    "date": "2024-02-02",
+    "author": "john Doe",
+    "prepTime": 40,
+    "likes": 350,
+    "views": 2800,
+    "vues": 2800
+  },
+  {
+    "id": "recipe-12",
+    "title": "Tarte au Citron",
+    "difficulty": 2,
+    "category": "Dessert",
+    "description": "Une tarte au citron avec une crème au citron, une mélange de sucre et de fraïcheur.",
+    "ingredients": [
+      "quas voluptas aut",
+      "non nulla dignissimos",
+      "tempore neque et",
+      "non illum nemo",
+      "est autem unde"
+    ],
+    "instructions": [
+      "aut non debitis",
+      "ad rem officia",
+      "porro ut aut",
+      "modi molestiae odio",
+      "omnis enim dolorem"
+    ],
+    "imageUrl": "https://i.imgur.com/VQtmMIe.png",
+    "date": "2024-02-12",
+    "author": "john Doe",
+    "prepTime": 30,
+    "likes": 280,
+    "views": 2000,
+    "vues": 2000
+  }
+]

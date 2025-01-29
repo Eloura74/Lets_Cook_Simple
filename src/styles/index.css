@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-primary text-content;
+  }
+}
+
+@layer components {
+  .btn-site {
+    @apply flex items-center gap-2 px-4 py-2 bg-secondary text-content rounded-lg hover:bg-accent transition-colors duration-300;
+  }
+
+  .nav-btn {
+    @apply flex items-center gap-2 px-4 py-2 text-content hover:text-accent transition-colors duration-300;
+  }
+}
+
+.background-principale {
+  background-color: #2C3639;
+}
+
+/* Classes personnalisées pour le dashboard */
+.title-dashboard-create {
+  @apply block text-lg text-[#DCD7C9] mb-2 pl-6 border-l-4 border-[#A27B5C];
+}
+
+.inputDashboard {
+  @apply w-full bg-[#3F4E4F] text-[#DCD7C9] rounded-lg p-2 border border-[#DCD7C9]/10 focus:border-[#A27B5C] focus:ring-1 focus:ring-[#A27B5C] outline-none;
+}
+
+.img-cover {
+  @apply w-full h-full object-cover;
+}
+
+.flex-center {
+  @apply flex items-center justify-center;
+}
