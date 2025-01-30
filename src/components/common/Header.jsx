@@ -16,6 +16,7 @@ import CircleType from "circletype";
 
 const Header = () => {
   const [menuOuvert, setMenuOuvert] = useState(false);
+  const [afficherImage, setAfficherImage] = useState(false);
   const navigate = useNavigate();
   const estConnecte = localStorage.getItem("isLoggedIn") === "true";
   const nomUtilisateur = localStorage.getItem("username");
@@ -50,6 +51,27 @@ const Header = () => {
 
   return (
     <header className="bg-white w-full">
+      {/* Easter Egg Nathan */}
+      {afficherImage && (
+        <div 
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-[9999]"
+          onClick={() => setAfficherImage(false)}
+        >
+          <div className="relative">
+            <img 
+              src="/images/nathan.webp" 
+              alt="Nathan"
+              className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg"
+            />
+            <button
+              onClick={() => setAfficherImage(false)}
+              className="absolute -top-4 -right-4 bg-[#A27B5C] text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-[#A27B5C]/80"
+            >
+              <FaTimes />
+            </button>
+          </div>
+        </div>
+      )}
       {/* Style pour l'animation du text-shadow */}
       <style>
         {`
@@ -97,7 +119,7 @@ const Header = () => {
                 </span>
                 <span
                   className="badge-gratuit ml-2 bg-gradient-to-r from-red-500 to-red-700 text-white px-2 sm:px-3 py-0.5 rounded-full text-xs sm:text-sm font-bold cursor-pointer"
-                  onClick={() => alert("Nathan , rien n'est gratuit !")}
+                  onClick={() => setAfficherImage(!afficherImage)}
                 >
                   GRATUIT !
                 </span>

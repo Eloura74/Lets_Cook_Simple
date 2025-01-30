@@ -1,11 +1,23 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaHome, FaChartBar } from 'react-icons/fa'
 
 // Ouvrir un lien au clic sur le mail
 const openMail = 'contact@letscook.fr'
 
 const Footer = () => {
+  const navigate = useNavigate();
+
+  const handleDashboardClick = (e) => {
+    e.preventDefault();
+    const estConnecte = localStorage.getItem("isLoggedIn") === "true";
+    if (estConnecte) {
+      navigate("/dashboard");
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <footer className="card-container text-white py-8 mt-6 shadow-[#4A403A] shadow-4xl">
       <section className="container mx-auto px-4">
@@ -26,13 +38,13 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/dashboard"
+                <button
+                  onClick={handleDashboardClick}
                   className="btn-site flex items-center gap-2 whitespace-nowrap"
                 >
                   <FaChartBar className="max-w-5 max-h-5" />
                   <span className="text-lg sm:text-xl">Tableau de bord</span>
-                </Link>
+                </button>
               </li>
             </ul>
           </nav>

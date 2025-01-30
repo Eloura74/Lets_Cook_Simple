@@ -32,6 +32,12 @@ const LoginPage = () => {
   return <LoginForm onClose={() => navigate(-1)} />;
 };
 
+// Composant d'inscription avec gestion de la fermeture
+const RegisterPage = () => {
+  const navigate = useNavigate();
+  return <RegisterForm onClose={() => navigate(-1)} />;
+};
+
 function App() {
   return (
     <Router>
@@ -44,7 +50,7 @@ function App() {
             {/* connexion */}
             <Route path="/login" element={<LoginPage />} />
             {/* inscription */}
-            <Route path="/signup" element={<RegisterForm />} />
+            <Route path="/signup" element={<RegisterPage />} />
             {/* dashboard */}
             <Route
               path="/dashboard"

@@ -1,38 +1,40 @@
-import React, { useState } from 'react'
-import { createPortal } from 'react-dom'
-import { motion } from 'framer-motion'
-import { FaTimes, FaBars } from 'react-icons/fa'
+import React, { useState } from "react";
+import { createPortal } from "react-dom";
+import { motion } from "framer-motion";
+import { FaTimes, FaBars } from "react-icons/fa";
 
 const Filtres = ({ onFiltrer }) => {
-  const [menuMobileOuvert, setMenuMobileOuvert] = useState(false)
+  const [menuMobileOuvert, setMenuMobileOuvert] = useState(false);
   const [etatsDesFiltres, setEtatsDesFiltres] = useState({
     date: { actif: false, inverse: false },
     popularite: { actif: false, inverse: false },
     difficulte: { actif: false, inverse: false },
-  })
+  });
 
   const configurationFiltres = {
     date: {
-      texte: 'Date',
+      texte: "Date",
       comparateur: (a, b, inverse) => {
-        const dateA = new Date(a.date)
-        const dateB = new Date(b.date)
-        return inverse ? dateA - dateB : dateB - dateA
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return inverse ? dateA - dateB : dateB - dateA;
       },
     },
     popularite: {
-      texte: 'Popularité',
+      texte: "Popularité",
       comparateur: (a, b, inverse) => {
-        return inverse ? a.likes - b.likes : b.likes - a.likes
+        return inverse ? a.likes - b.likes : b.likes - a.likes;
       },
     },
     difficulte: {
-      texte: 'Difficulté',
+      texte: "Difficulté",
       comparateur: (a, b, inverse) => {
-        return inverse ? a.difficulty - b.difficulty : b.difficulty - a.difficulty
+        return inverse
+          ? a.difficulty - b.difficulty
+          : b.difficulty - a.difficulty;
       },
     },
-  }
+  };
 
   const menuVariants = {
     open: {
@@ -49,7 +51,7 @@ const Filtres = ({ onFiltrer }) => {
         duration: 0.3,
       },
     },
-  }
+  };
 
   const gererClicFiltre = (nomFiltre) => {
     setEtatsDesFiltres((prev) => {
@@ -57,15 +59,15 @@ const Filtres = ({ onFiltrer }) => {
         date: { actif: false, inverse: false },
         popularite: { actif: false, inverse: false },
         difficulte: { actif: false, inverse: false },
-      }
+      };
 
       if (prev[nomFiltre].actif) {
         nouveauxEtats[nomFiltre] = {
           actif: true,
           inverse: !prev[nomFiltre].inverse,
-        }
+        };
       } else {
-        nouveauxEtats[nomFiltre] = { actif: true, inverse: false }
+        nouveauxEtats[nomFiltre] = { actif: true, inverse: false };
       }
 
       onFiltrer((recettes) => {
@@ -75,29 +77,29 @@ const Filtres = ({ onFiltrer }) => {
             b,
             nouveauxEtats[nomFiltre].inverse
           )
-        )
-        return recettesTriees
-      })
+        );
+        return recettesTriees;
+      });
 
-      return nouveauxEtats
-    })
-  }
+      return nouveauxEtats;
+    });
+  };
 
   const obtenirClassesBouton = (nomFiltre) => {
     return `flex items-center gap-2 px-4 py-2 rounded-lg ${
       etatsDesFiltres[nomFiltre].actif
-        ? 'bg-[#A27B5C] text-[#DCD7C9]'
-        : 'bg-[#2C3639] text-[#DCD7C9] hover:bg-[#3F4E4F]'
-    } transition-colors`
-  }
+        ? "bg-[#A27B5C] text-[#DCD7C9]"
+        : "bg-[#2C3639] text-[#DCD7C9] hover:bg-[#3F4E4F]"
+    } transition-colors`;
+  };
 
   const obtenirTexteBouton = (nomFiltre) => {
-    return configurationFiltres[nomFiltre].texte
-  }
+    return configurationFiltres[nomFiltre].texte;
+  };
 
   // Composant du menu mobile
   const MenuMobile = () => {
-    if (!menuMobileOuvert) return null
+    if (!menuMobileOuvert) return null;
 
     return createPortal(
       <div className="fixed inset-0 bg-black/50 z-[99999] lg:hidden">
@@ -112,8 +114,8 @@ const Filtres = ({ onFiltrer }) => {
               <button
                 key={nomFiltre}
                 onClick={() => {
-                  gererClicFiltre(nomFiltre)
-                  setMenuMobileOuvert(false)
+                  gererClicFiltre(nomFiltre);
+                  setMenuMobileOuvert(false);
                 }}
                 className={obtenirClassesBouton(nomFiltre)}
               >
@@ -126,7 +128,7 @@ const Filtres = ({ onFiltrer }) => {
                     animate={{ scale: 1 }}
                     className="flex items-center justify-center w-5 h-5 rounded-full bg-[#A27B5C] text-white text-xs"
                   >
-                    {etatsDesFiltres[nomFiltre].inverse ? '↑' : '↓'}
+                    {etatsDesFiltres[nomFiltre].inverse ? "↑" : "↓"}
                   </motion.span>
                 )}
               </button>
@@ -138,9 +140,9 @@ const Filtres = ({ onFiltrer }) => {
                     date: { actif: false, inverse: false },
                     popularite: { actif: false, inverse: false },
                     difficulte: { actif: false, inverse: false },
-                  })
-                  onFiltrer((recettes) => [...recettes])
-                  setMenuMobileOuvert(false)
+                  });
+                  onFiltrer((recettes) => [...recettes]);
+                  setMenuMobileOuvert(false);
                 }}
                 className="btn-site px-4 py-2"
               >
@@ -161,15 +163,19 @@ const Filtres = ({ onFiltrer }) => {
         </motion.div>
       </div>,
       document.body
-    )
-  }
+    );
+  };
 
   return (
-    <section className="container mx-auto px-6 py-4">
-      <div className="flex flex-wrap items-center gap-6">
-        <h2 className="flex text-3xl mx-auto pb-2 text-[#DCD7C9] font-memoirs underline-offset-4 underline [text-shadow:_0_3px_0_rgba(1_1_1_/_80%)]">
-          Choisissez un filtre :
-        </h2>
+    <section className="container mx-auto px-6 py-4 flex flex-wrap items-center justify-center">
+      <div className="flex flex-wrap items-center gap-6 w-full">
+        {/* Ligne du titre */}
+        <div className="w-full  shadow-[#a19a96] shadow-4xl">
+          <h2 className="text-3xl pb-2 w-fit px-6 bg-[#A27B5C]/50 rounded-lg text-[#DCD7C9] flex justify-center font-memoirs underline-offset-4  mx-auto titleShadow">
+            Choisissez un filtre
+          </h2>
+          ²
+        </div>
 
         {/* Version Mobile */}
         <div className="lg:hidden w-full">
@@ -177,7 +183,7 @@ const Filtres = ({ onFiltrer }) => {
             className="btn-site flex items-center mx-auto gap-2 mb-1"
             onClick={() => setMenuMobileOuvert(!menuMobileOuvert)}
             aria-label={
-              menuMobileOuvert ? 'Fermer les filtres' : 'Ouvrir les filtres'
+              menuMobileOuvert ? "Fermer les filtres" : "Ouvrir les filtres"
             }
           >
             {menuMobileOuvert ? (
@@ -192,7 +198,7 @@ const Filtres = ({ onFiltrer }) => {
         </div>
 
         {/* Version Desktop */}
-        <div className="hidden lg:flex flex-wrap items-center gap-3">
+        <div className="hidden lg:flex flex-wrap justify-center items-center gap-3 w-full">
           {Object.keys(configurationFiltres).map((nomFiltre) => (
             <motion.button
               key={nomFiltre}
@@ -210,11 +216,12 @@ const Filtres = ({ onFiltrer }) => {
                   animate={{ scale: 1 }}
                   className="flex items-center justify-center w-5 h-5 rounded-full bg-[#A27B5C] text-white text-xs"
                 >
-                  {etatsDesFiltres[nomFiltre].inverse ? '↑' : '↓'}
+                  {etatsDesFiltres[nomFiltre].inverse ? "↑" : "↓"}
                 </motion.span>
               )}
             </motion.button>
           ))}
+
           {Object.values(etatsDesFiltres).some((filtre) => filtre.actif) && (
             <motion.button
               whileHover={{ scale: 1.02 }}
@@ -224,8 +231,8 @@ const Filtres = ({ onFiltrer }) => {
                   date: { actif: false, inverse: false },
                   popularite: { actif: false, inverse: false },
                   difficulte: { actif: false, inverse: false },
-                })
-                onFiltrer((recettes) => [...recettes])
+                });
+                onFiltrer((recettes) => [...recettes]);
               }}
               className="btn-site px-4 py-2"
             >
@@ -235,7 +242,7 @@ const Filtres = ({ onFiltrer }) => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Filtres
+export default Filtres;
