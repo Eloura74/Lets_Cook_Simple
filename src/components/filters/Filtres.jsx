@@ -1,144 +1,241 @@
-import React, { useState } from "react";
-import {
-  FaSort,
-  FaHeart,
-  FaStar,
-  FaArrowUp,
-  FaArrowDown,
-} from "react-icons/fa";
+import React, { useState } from 'react'
+import { createPortal } from 'react-dom'
+import { motion } from 'framer-motion'
+import { FaTimes, FaBars } from 'react-icons/fa'
 
-const Filtres = ({ onFiltrer }) => {
-  const [filtreActif, setFiltreActif] = useState(null);
-  const [ordreInverse, setOrdreInverse] = useState(false);
+const Filtres = ({ onFilterChange }) => {
+  const [menuMobileOuvert, setMenuMobileOuvert] = useState(false)
+  const [etatsDesFiltres, setEtatsDesFiltres] = useState({
+    date: { actif: false, inverse: false },
+    popularite: { actif: false, inverse: false },
+    difficulte: { actif: false, inverse: false },
+  })
 
-  // Fonction pour gérer le clic sur un filtre
-  const gererClicFiltre = (type) => {
-    if (filtreActif === type) {
-      // Si on clique sur le même filtre, on inverse l'ordre
-      setOrdreInverse(!ordreInverse);
-      appliquerFiltre(type, !ordreInverse);
-    } else {
-      // Si on clique sur un nouveau filtre
-      setFiltreActif(type);
-      setOrdreInverse(false);
-      appliquerFiltre(type, false);
-    }
-  };
+  const configurationFiltres = {
+    date: {
+      texte: 'Date',
+      comparateur: (a, b, inverse) => {
+        const dateA = new Date(a.createdAt)
+        const dateB = new Date(b.createdAt)
+        return inverse ? dateA - dateB : dateB - dateA
+      },
+    },
+    popularite: {
+      texte: 'Popularité',
+      comparateur: (a, b, inverse) => {
+        return inverse ? a.views - b.views : b.views - a.views
+      },
+    },
+    difficulte: {
+      texte: 'Difficulté',
+      comparateur: (a, b, inverse) => {
+        return inverse ? a.difficulty - b.difficulty : b.difficulty - a.difficulty
+      },
+    },
+  }
 
-  // Fonction pour appliquer le filtre
-  const appliquerFiltre = (type, inverse) => {
-    switch (type) {
-      case "date":
-        onFiltrer((recettes) =>
-          [...recettes].sort((a, b) => {
-            const comparaison = new Date(b.date) - new Date(a.date);
-            return inverse ? -comparaison : comparaison;
-          })
-        );
-        break;
-      case "popularite":
-        onFiltrer((recettes) =>
-          [...recettes].sort((a, b) => {
-            const comparaison = b.likes - a.likes;
-            return inverse ? -comparaison : comparaison;
-          })
-        );
-        break;
-      case "difficulte":
-        onFiltrer((recettes) =>
-          [...recettes].sort((a, b) => {
-            const comparaison = b.difficulty - a.difficulty;
-            return inverse ? -comparaison : comparaison;
-          })
-        );
-        break;
-      default:
-        onFiltrer((recettes) => [...recettes]);
-    }
-  };
+  const menuVariants = {
+    open: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+      },
+    },
+    closed: {
+      opacity: 0,
+      y: -20,
+      transition: {
+        duration: 0.3,
+      },
+    },
+  }
 
-  // Réinitialiser les filtres
-  const reinitialiserFiltres = () => {
-    setFiltreActif(null);
-    setOrdreInverse(false);
-    onFiltrer((recettes) => [...recettes]);
-  };
+  const gererClicFiltre = (nomFiltre) => {
+    setEtatsDesFiltres((prev) => {
+      const nouveauxEtats = {
+        date: { actif: false, inverse: false },
+        popularite: { actif: false, inverse: false },
+        difficulte: { actif: false, inverse: false },
+      }
 
-  // Fonction pour obtenir le texte du bouton
-  const obtenirTexteBouton = (type) => {
-    if (filtreActif !== type) return `Par ${type}`;
-    return ordreInverse ? `${type} (croissant)` : `${type} (décroissant)`;
-  };
+      if (prev[nomFiltre].actif) {
+        nouveauxEtats[nomFiltre] = {
+          actif: true,
+          inverse: !prev[nomFiltre].inverse,
+        }
+      } else {
+        nouveauxEtats[nomFiltre] = { actif: true, inverse: false }
+      }
+
+      onFilterChange((recettes) => {
+        const recettesTriees = [...recettes].sort((a, b) =>
+          configurationFiltres[nomFiltre].comparateur(
+            a,
+            b,
+            nouveauxEtats[nomFiltre].inverse
+          )
+        )
+        return recettesTriees
+      })
+
+      return nouveauxEtats
+    })
+  }
+
+  const obtenirClassesBouton = (nomFiltre) => {
+    return `flex items-center gap-2 px-4 py-2 rounded-lg ${
+      etatsDesFiltres[nomFiltre].actif
+        ? 'bg-[#A27B5C] text-[#DCD7C9]'
+        : 'bg-[#2C3639] text-[#DCD7C9] hover:bg-[#3F4E4F]'
+    } transition-colors`
+  }
+
+  const obtenirTexteBouton = (nomFiltre) => {
+    return configurationFiltres[nomFiltre].texte
+  }
+
+  // Composant du menu mobile
+  const MenuMobile = () => {
+    if (!menuMobileOuvert) return null
+
+    return createPortal(
+      <div className="fixed inset-0 bg-black/50 z-[99999] lg:hidden">
+        <motion.div
+          className="fixed top-[4rem] inset-x-8 flex flex-col gap-4 bg-[#2C3639]/35 p-2 rounded-lg shadow-xl shadow-[#4A403A]/90"
+          initial="closed"
+          animate="open"
+          variants={menuVariants}
+        >
+          <div className="flex flex-col gap-4 shadow-xl shadow-[#4A403A]/90">
+            {Object.keys(configurationFiltres).map((nomFiltre) => (
+              <button
+                key={nomFiltre}
+                onClick={() => {
+                  gererClicFiltre(nomFiltre)
+                  setMenuMobileOuvert(false)
+                }}
+                className={obtenirClassesBouton(nomFiltre)}
+              >
+                <span className="font-medium">
+                  {obtenirTexteBouton(nomFiltre)}
+                </span>
+                {etatsDesFiltres[nomFiltre].actif && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="flex items-center justify-center w-5 h-5 rounded-full bg-[#A27B5C] text-white text-xs"
+                  >
+                    {etatsDesFiltres[nomFiltre].inverse ? '↑' : '↓'}
+                  </motion.span>
+                )}
+              </button>
+            ))}
+            {Object.values(etatsDesFiltres).some((filtre) => filtre.actif) && (
+              <button
+                onClick={() => {
+                  setEtatsDesFiltres({
+                    date: { actif: false, inverse: false },
+                    popularite: { actif: false, inverse: false },
+                    difficulte: { actif: false, inverse: false },
+                  })
+                  onFilterChange((recettes) => [...recettes])
+                  setMenuMobileOuvert(false)
+                }}
+                className="btn-site px-4 py-2"
+              >
+                Tout afficher
+              </button>
+            )}
+          </div>
+
+          <div className="flex justify-center mt-4">
+            <button
+              onClick={() => setMenuMobileOuvert(false)}
+              className="rounded-full p-2 bg-[#A27B5C] hover:bg-[#A27B5C]/80 transition-colors"
+              aria-label="Fermer le menu des filtres"
+            >
+              <FaTimes className="w-6 h-6 text-[#DCD7C9]" />
+            </button>
+          </div>
+        </motion.div>
+      </div>,
+      document.body
+    )
+  }
 
   return (
-    <div className="container mx-auto px-4 py-6  ">
-      <h2 className="text-4xl w-fit mx-auto text-center p-2 border-b rounded-lg border-[#FDFDFC] bg-[#4A403A]/30 text-[#DCD7C9] mb-4 font-memoirs shadow-lg shadow-[#4A403A] titleShadow">
-        Filtrer les recettes
-      </h2>
+    <section className="container mx-auto px-6 py-4">
+      <div className="flex flex-wrap items-center gap-6">
+        <h2 className="flex text-3xl mx-auto pb-2 text-[#DCD7C9] font-memoirs underline-offset-4 underline [text-shadow:_0_3px_0_rgba(1_1_1_/_80%)]">
+          Choisissez un filtre :
+        </h2>
 
-      <div className="flex flex-wrap justify-center gap-4">
-        <button
-          onClick={() => gererClicFiltre("date")}
-          className={`btn-site flex items-center gap-2 ${
-            filtreActif === "date" ? "bg-[#A27B5C] text-white" : ""
-          }`}
-        >
-          {filtreActif === "date" ? (
-            ordreInverse ? (
-              <FaArrowUp />
+        {/* Version Mobile */}
+        <div className="lg:hidden w-full">
+          <button
+            className="btn-site flex items-center mx-auto gap-2 mb-1"
+            onClick={() => setMenuMobileOuvert(!menuMobileOuvert)}
+            aria-label={
+              menuMobileOuvert ? 'Fermer les filtres' : 'Ouvrir les filtres'
+            }
+          >
+            {menuMobileOuvert ? (
+              <FaTimes className="w-5 h-5" />
             ) : (
-              <FaArrowDown />
-            )
-          ) : (
-            <FaSort />
-          )}
-          <span>{obtenirTexteBouton("date")}</span>
-        </button>
-
-        <button
-          onClick={() => gererClicFiltre("popularite")}
-          className={`btn-site flex items-center gap-2 ${
-            filtreActif === "popularite" ? "bg-[#A27B5C] text-white" : ""
-          }`}
-        >
-          {filtreActif === "popularite" ? (
-            ordreInverse ? (
-              <FaArrowUp />
-            ) : (
-              <FaArrowDown />
-            )
-          ) : (
-            <FaHeart />
-          )}
-          <span>{obtenirTexteBouton("popularite")}</span>
-        </button>
-
-        <button
-          onClick={() => gererClicFiltre("difficulte")}
-          className={`btn-site flex items-center gap-2 ${
-            filtreActif === "difficulte" ? "bg-[#A27B5C] text-white" : ""
-          }`}
-        >
-          {filtreActif === "difficulte" ? (
-            ordreInverse ? (
-              <FaArrowUp />
-            ) : (
-              <FaArrowDown />
-            )
-          ) : (
-            <FaStar />
-          )}
-          <span>{obtenirTexteBouton("difficulte")}</span>
-        </button>
-
-        {filtreActif && (
-          <button onClick={reinitialiserFiltres} className="btn-site">
-            Tout afficher
+              <FaBars className="w-5 h-5" />
+            )}
+            <span>Filtres</span>
           </button>
-        )}
-      </div>
-    </div>
-  );
-};
 
-export default Filtres;
+          <MenuMobile />
+        </div>
+
+        {/* Version Desktop */}
+        <div className="hidden lg:flex flex-wrap items-center gap-3">
+          {Object.keys(configurationFiltres).map((nomFiltre) => (
+            <motion.button
+              key={nomFiltre}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => gererClicFiltre(nomFiltre)}
+              className={obtenirClassesBouton(nomFiltre)}
+            >
+              <span className="font-medium">
+                {obtenirTexteBouton(nomFiltre)}
+              </span>
+              {etatsDesFiltres[nomFiltre].actif && (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="flex items-center justify-center w-5 h-5 rounded-full bg-[#A27B5C] text-white text-xs"
+                >
+                  {etatsDesFiltres[nomFiltre].inverse ? '↑' : '↓'}
+                </motion.span>
+              )}
+            </motion.button>
+          ))}
+          {Object.values(etatsDesFiltres).some((filtre) => filtre.actif) && (
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => {
+                setEtatsDesFiltres({
+                  date: { actif: false, inverse: false },
+                  popularite: { actif: false, inverse: false },
+                  difficulte: { actif: false, inverse: false },
+                })
+                onFilterChange((recettes) => [...recettes])
+              }}
+              className="btn-site px-4 py-2"
+            >
+              Tout afficher
+            </motion.button>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default Filtres

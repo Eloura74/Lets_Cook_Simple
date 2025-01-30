@@ -286,8 +286,8 @@ const DashboardPage = () => {
         </section>
         {/* ____________________________________________________________________________ */}
         {/* Colonne de droite - Mes recettes */}
-        <section className="bg-[#2C3639] rounded-xl p-6  shadow-inner shadow-orange-900/50">
-          <div className="flex justify-between items-center mb-6">
+        <section className="bg-[#2C3639] rounded-xl p-6 shadow-inner shadow-orange-900/50">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
             <h2 className="text-2xl font-memoirs text-[#DCD7C9] titleShadow">
               Mes recettes récentes
             </h2>
@@ -296,40 +296,42 @@ const DashboardPage = () => {
             </span>
           </div>
 
-          <div className="space-y-4 shadow-sm shadow-orange-900/50">
+          <div className="space-y-4">
             {mesRecettes.map((recette) => (
               <div
                 key={recette.id}
-                className="bg-[#3F4E4F] rounded-lg p-4 flex items-center gap-4"
+                className="bg-[#3F4E4F] rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4"
               >
                 <img
                   src={recette.imageUrl}
                   alt={recette.title}
-                  className="w-20 h-20 object-cover rounded-lg"
+                  className="w-full sm:w-20 h-20 object-cover rounded-lg"
                 />
                 <div className="flex-grow">
-                  <h3 className="text-[#DCD7C9] font-medium">
+                  <h3 className="text-[#DCD7C9] font-medium mb-2">
                     {recette.title}
                   </h3>
-                  <div className="flex items-center gap-4 text-sm text-[#DCD7C9]/60">
+                  <div className="flex flex-wrap gap-4 text-sm text-[#DCD7C9]/60">
                     <span>{recette.prepTime} min</span>
                     <span>{recette.views} vues</span>
                     <span>{recette.likes} likes</span>
                   </div>
-                  <DifficultyStars difficulty={recette.difficulty} />
+                  <div className="mt-2">
+                    <DifficultyStars difficulty={recette.difficulty} />
+                  </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 mt-4 sm:mt-0 w-full sm:w-auto justify-end">
                   <Link
-                    to={`/recipe/${recette.id}`}
+                    to={`/recette/${recette.id}`}
                     className="p-2 text-[#DCD7C9] hover:text-[#A27B5C] transition-colors"
                   >
-                    <FaEye />
+                    <FaEye className="w-5 h-5" />
                   </Link>
                   <button
                     onClick={() => handleSupprimer(recette.id)}
                     className="p-2 text-[#DCD7C9] hover:text-red-500 transition-colors"
                   >
-                    <FaTrash />
+                    <FaTrash className="w-5 h-5" />
                   </button>
                 </div>
               </div>
