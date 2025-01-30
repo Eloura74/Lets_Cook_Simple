@@ -95,7 +95,10 @@ const Header = () => {
                     <span className="absolute -bottom-0.5 left-0 w-full h-0.5 bg-[#A27B5C] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                   </span>
                 </span>
-                <span className="badge-gratuit ml-2 bg-gradient-to-r from-red-500 to-red-700 text-white px-2 sm:px-3 py-0.5 rounded-full text-xs sm:text-sm font-bold cursor-pointer">
+                <span
+                  className="badge-gratuit ml-2 bg-gradient-to-r from-red-500 to-red-700 text-white px-2 sm:px-3 py-0.5 rounded-full text-xs sm:text-sm font-bold cursor-pointer"
+                  onClick={() => alert("Nathan , rien n'est gratuit !")}
+                >
                   GRATUIT !
                 </span>
               </>
@@ -112,7 +115,10 @@ const Header = () => {
                     <span className="absolute -bottom-0.5 left-0 w-full h-0.5 bg-[#A27B5C] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                   </span>
                 </span>
-                <span className="badge-gratuit ml-2 bg-gradient-to-r from-red-500 to-red-700 text-white px-2 sm:px-3 py-0.5 rounded-full text-xs sm:text-sm font-bold cursor-pointer">
+                <span
+                  className="badge-gratuit ml-2 bg-gradient-to-r from-red-500 to-red-700 text-white px-2 sm:px-3 py-0.5 rounded-full text-xs sm:text-sm font-bold cursor-pointer"
+                  onClick={() => alert("Nathan , rien n'est gratuit !")}
+                >
                   GRATUIT !
                 </span>
               </>
@@ -213,22 +219,6 @@ const Header = () => {
             )}
           </div>
         </div>
-
-        {/* Barre de séparation entre le header et le body */}
-        {/* <div className="relative w-full h-12 shadow-lg"> */}
-        {/* Ajout d'un flou en haut pour adoucir la transition */}
-        {/* <div className="absolute top-0 left-0 w-full h-6 bg-black/20 backdrop-blur-md"></div> */}
-
-        {/* Dégradé horizontal */}
-        {/* <div
-            className="w-full h-full bg-gradient-to-r
-      from-[#010101] from-0%
-      via-[#181510] via-30%
-      via-[#605E57] via-40%
-      via-[#2F2B24] via-60%
-      to-[#4E4A47] to-100%"
-          ></div>
-        </div> */}
 
         {/* Section Hero avec barre de recherche */}
         <section
