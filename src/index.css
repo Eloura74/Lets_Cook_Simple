@@ -172,9 +172,16 @@
 
   /* Carrousel des recettes similaires */
   .recipe-carousel {
-    @apply flex gap-4 overflow-x-auto pb-4 justify-center mx-auto;
+    @apply flex gap-4 overflow-x-auto pb-4 max-w-[90%];
     scrollbar-width: thin;
     scrollbar-color: #a27b5c #2c3639;
+    scroll-behavior: smooth;
+    scroll-padding: 1rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .recipe-carousel-container {
+    @apply relative w-full flex justify-center items-center;
   }
 
   .recipe-carousel::-webkit-scrollbar {
@@ -186,7 +193,7 @@
   }
 
   .recipe-carousel::-webkit-scrollbar-thumb {
-    @apply bg-[#A27B5C] rounded-full;
+    @apply bg-[#A27B5C] rounded-full hover:bg-[#A27B5C]/80 cursor-pointer;
   }
 }
 

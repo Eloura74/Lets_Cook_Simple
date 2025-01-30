@@ -27,30 +27,35 @@ const RecipeDetail = () => {
   return (
     <div className="min-h-screen background-principale p-4">
       {/* Carrousel des recettes similaires */}
-      <div className="recipe-carousel mx-auto ">
-        {recettes.slice(0, 3).map((r) => (
-          <Link
-            key={r.id}
-            to={`/recette/${r.id}`}
-            className="flex-shrink-0 w-64 bg-[#2C3639]/90 rounded-lg overflow-hidden hover:scale-[1.02] transition-transform duration-300"
-          >
-            <div className="relative h-40">
-              <img
-                src={r.imageUrl}
-                alt={r.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute bottom-2 left-2">
-                <DifficultyStars difficulty={r.difficulty} />
-              </div>
-            </div>
-            <div className="p-2">
-              <h3 className="text-[#DCD7C9] text-sm font-semibold line-clamp-2">
-                {r.title}
-              </h3>
-            </div>
-          </Link>
-        ))}
+      <div className="recipe-carousel-container">
+        <div className="recipe-carousel mx-auto">
+          {recettes
+            .filter((r) => r.id !== id) // Exclure la recette actuelle
+            .slice(0, 4) // Prendre les 4 premières recettes
+            .map((r) => (
+              <Link
+                key={r.id}
+                to={`/recette/${r.id}`}
+                className="flex-shrink-0 w-64 bg-[#2C3639]/90 rounded-lg overflow-hidden hover:scale-[1.02] transition-transform duration-300"
+              >
+                <div className="relative h-40">
+                  <img
+                    src={r.imageUrl}
+                    alt={r.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute bottom-2 left-2">
+                    <DifficultyStars difficulty={r.difficulty} />
+                  </div>
+                </div>
+                <div className="p-2">
+                  <h3 className="text-[#DCD7C9] text-sm font-semibold line-clamp-2">
+                    {r.title}
+                  </h3>
+                </div>
+              </Link>
+            ))}
+        </div>
       </div>
 
       {/* Détail de la recette */}
