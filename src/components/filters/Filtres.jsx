@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import { motion } from 'framer-motion'
 import { FaTimes, FaBars } from 'react-icons/fa'
 
-const Filtres = ({ onFilterChange }) => {
+const Filtres = ({ onFiltrer }) => {
   const [menuMobileOuvert, setMenuMobileOuvert] = useState(false)
   const [etatsDesFiltres, setEtatsDesFiltres] = useState({
     date: { actif: false, inverse: false },
@@ -15,15 +15,15 @@ const Filtres = ({ onFilterChange }) => {
     date: {
       texte: 'Date',
       comparateur: (a, b, inverse) => {
-        const dateA = new Date(a.createdAt)
-        const dateB = new Date(b.createdAt)
+        const dateA = new Date(a.date)
+        const dateB = new Date(b.date)
         return inverse ? dateA - dateB : dateB - dateA
       },
     },
     popularite: {
       texte: 'Popularité',
       comparateur: (a, b, inverse) => {
-        return inverse ? a.views - b.views : b.views - a.views
+        return inverse ? a.likes - b.likes : b.likes - a.likes
       },
     },
     difficulte: {
@@ -68,7 +68,7 @@ const Filtres = ({ onFilterChange }) => {
         nouveauxEtats[nomFiltre] = { actif: true, inverse: false }
       }
 
-      onFilterChange((recettes) => {
+      onFiltrer((recettes) => {
         const recettesTriees = [...recettes].sort((a, b) =>
           configurationFiltres[nomFiltre].comparateur(
             a,
@@ -139,7 +139,7 @@ const Filtres = ({ onFilterChange }) => {
                     popularite: { actif: false, inverse: false },
                     difficulte: { actif: false, inverse: false },
                   })
-                  onFilterChange((recettes) => [...recettes])
+                  onFiltrer((recettes) => [...recettes])
                   setMenuMobileOuvert(false)
                 }}
                 className="btn-site px-4 py-2"
@@ -225,7 +225,7 @@ const Filtres = ({ onFilterChange }) => {
                   popularite: { actif: false, inverse: false },
                   difficulte: { actif: false, inverse: false },
                 })
-                onFilterChange((recettes) => [...recettes])
+                onFiltrer((recettes) => [...recettes])
               }}
               className="btn-site px-4 py-2"
             >

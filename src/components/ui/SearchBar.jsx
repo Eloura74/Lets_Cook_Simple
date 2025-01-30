@@ -1,16 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FaSearch, FaEye } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import DifficultyStars from "../ui/DifficultyStars";
 import useRecettes from "../../hooks/useRecettes";
 
 const SearchBar = () => {
-  const [recherche, setRecherche] = useState(""); // État pour la recherche
-  const [resultatVisible, setResultatVisible] = useState(false); // État pour le visuel
-  const { recettes } = useRecettes(); // Récupérer les recettes
-  const searchRef = useRef(null); // Récupérer la reference
+  const [recherche, setRecherche] = useState("");
+  const [resultatVisible, setResultatVisible] = useState(false);
+  const { recettes } = useRecettes();
+  const searchRef = useRef(null);
 
-  // Normaliser le texte (enlever accents et mettre en minuscule)
   const normaliserTexte = (texte) => {
     if (!texte) return "";
     return texte
@@ -41,40 +39,35 @@ const SearchBar = () => {
   }, []);
 
   return (
-    <div className="relative w-full" ref={searchRef}>
-      <div className="relative ">
+    <div className="relative w-full max-w-md mx-auto px-4" ref={searchRef}>
+      <div className="relative">
         <input
           type="text"
-          placeholder="Rechercher une recette..."
+          placeholder="Rechercher..."
           value={recherche}
           onChange={(e) => {
             setRecherche(e.target.value);
             setResultatVisible(e.target.value.trim().length > 0);
           }}
-          className="w-full p-4 pl-12 
-                   bg-black/20 backdrop-blur-sm
-                   rounded-full
-                   text-[#DCD7C9] text-sm sm:text-base
+          className="w-full p-2 pl-10 
+                   bg-[#2C3639]/90
+                   rounded-lg
+                   text-[#DCD7C9] text-sm
                    placeholder-[#DCD7C9]/70
-                   focus:outline-none focus:ring-2 focus:ring-[#DCD7C9]/50
-                   shadow-xl shadow-[#DCD7C9]/60
+                   focus:outline-none focus:ring-1 focus:ring-[#A27B5C]
                    border border-[#DCD7C9]/10"
         />
-        <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/70" />
+        <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#DCD7C9]/70" />
       </div>
 
-      {/* Liste des résultats */}
       {resultatVisible && recettesFiltrees.length > 0 && (
-        <div
-          className="absolute z-50 w-full mt-2 bg-[#2C3639]/95 backdrop-blur-sm 
-                      rounded-2xl shadow-xl border border-[#DCD7C9]/10 overflow-hidden"
-        >
-          <ul className="py-2">
+        <div className="absolute z-50 w-full mt-1 bg-[#2C3639]/95 rounded-lg border border-[#DCD7C9]/10">
+          <ul>
             {recettesFiltrees.map((recette) => (
               <li key={recette.id}>
                 <Link
                   to={`/recette/${recette.id}`}
-                  className="flex items-center px-4 py-2 hover:bg-[#A27B5C]/20 transition-colors"
+                  className="flex items-center gap-3 px-3 py-2 hover:bg-[#A27B5C]/20"
                   onClick={() => {
                     setResultatVisible(false);
                     setRecherche("");
@@ -83,19 +76,14 @@ const SearchBar = () => {
                   <img
                     src={recette.imageUrl}
                     alt={recette.title}
-                    className="w-10 h-10 rounded-lg object-cover"
+                    className="w-8 h-8 rounded object-cover"
                   />
-                  <div className="ml-3 text-[#DCD7C9] flex items-center gap-2">
-                    <span className="font-medium">{recette.title}</span>
-                    <span className="text-[#DCD7C9]/50">|</span>
-                    <span className="text-red-400">❤️ {recette.likes}</span>
-                    <span className="text-[#DCD7C9]/50">|</span>
-                    <span className="flex items-center gap-1">
-                      <FaEye className="text-blue-400 w-4 h-4" />
-                      {recette.views}
-                    </span>
-                    <span className="text-[#DCD7C9]/50">|</span>
-                    <DifficultyStars difficulty={recette.difficulty} />
+                  <div className="flex-1">
+                    <p className="text-[#DCD7C9] text-sm">{recette.title}</p>
+                    <div className="flex items-center gap-2 text-xs text-[#DCD7C9]/70">
+                      <span>❤️ {recette.likes}</span>
+                      <span>👁️ {recette.views}</span>
+                    </div>
                   </div>
                 </Link>
               </li>
