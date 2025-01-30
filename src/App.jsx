@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
+  useNavigate,
 } from "react-router-dom";
 import Header from "./components/common/Header";
 import LoginForm from "./components/auth/LoginForm";
@@ -25,6 +26,12 @@ const RoutePrivee = ({ children }) => {
   return children;
 };
 
+// Composant de connexion avec gestion de la fermeture
+const LoginPage = () => {
+  const navigate = useNavigate();
+  return <LoginForm onClose={() => navigate(-1)} />;
+};
+
 function App() {
   return (
     <Router>
@@ -35,7 +42,7 @@ function App() {
             {/* accueil */}
             <Route path="/" element={<HomePage />} />
             {/* connexion */}
-            <Route path="/login" element={<LoginForm />} />
+            <Route path="/login" element={<LoginPage />} />
             {/* inscription */}
             <Route path="/signup" element={<RegisterForm />} />
             {/* dashboard */}
