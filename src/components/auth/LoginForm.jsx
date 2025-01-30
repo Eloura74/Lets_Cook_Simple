@@ -20,6 +20,7 @@ const LoginForm = () => {
   };
 
   return (
+    // Formulaire de connexion
     <main className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] flex justify-center items-center bg-[#2C3639]/95 p-4 z-50">
       <form onSubmit={handleLogin} className="flex flex-col space-y-4">
         <div className="flex items-center border-b border-[#2C3639]">

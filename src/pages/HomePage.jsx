@@ -28,9 +28,12 @@ const HomePage = () => {
 
       {/* Section des recettes */}
       <section className="container mx-auto px-4 py-8">
-        <h2 className="text-4xl font-memoirs text-[#DCD7C9] mb-8 text-center">
+        <h2 className="text-4xl font-memoirs text-[#DCD7C9]  mb-4 text-center">
           Nos Recettes
         </h2>
+        {/* <div className="relative w-full flex justify-center my-6"> */}
+        <div className="w-full h-[2px] my-6 bg-gradient-to-r from-transparent via-[#131212] to-transparent"></div>
+        {/* </div> */}
 
         {/* Grille responsive des recettes */}
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-[1920px] mx-auto">

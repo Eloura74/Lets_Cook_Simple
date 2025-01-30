@@ -1,12 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaUserCog } from "react-icons/fa";
 
 const DashboardButton = () => {
+  const location = useLocation();
+  const isActive = location.pathname === "/dashboard";
+
   return (
-    <Link to="/dashboard" className="btn-site">
-      <FaUserCog className="max-w-5 max-h-5" />
-      <span className="mx-auto pr-4 text-2xl">Dashboard</span>
+    <Link
+      to="/dashboard"
+      className={`btn-site group ${isActive ? "active" : ""}`}
+    >
+      <FaUserCog />
+      <span>Dashboard</span>
     </Link>
   );
 };

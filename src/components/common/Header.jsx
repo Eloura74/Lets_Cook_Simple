@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+// Header.js
+
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../ui/SearchBar";
 import HomeButton from "../buttons/HomeButton";
@@ -10,12 +12,33 @@ import {
   FaUserPlus,
   FaSignOutAlt,
 } from "react-icons/fa";
+import CircleType from "circletype";
 
 const Header = () => {
   const [menuOuvert, setMenuOuvert] = useState(false);
   const navigate = useNavigate();
   const estConnecte = localStorage.getItem("isLoggedIn") === "true";
   const nomUtilisateur = localStorage.getItem("username");
+
+  // --------- Pour CircleType ---------
+  const texteHeroRef = useRef(null);
+  const circleTypeRef = useRef(null);
+
+  useEffect(() => {
+    if (texteHeroRef.current && !circleTypeRef.current) {
+      circleTypeRef.current = new CircleType(texteHeroRef.current);
+      circleTypeRef.current.radius(2500);
+    }
+
+    // Cleanup pour éviter les problèmes de mémoire
+    return () => {
+      if (circleTypeRef.current) {
+        circleTypeRef.current.destroy();
+        circleTypeRef.current = null;
+      }
+    };
+  }, []); // Dépendances vides pour n'exécuter qu'une seule fois
+  // -----------------------------------
 
   const toggleMenu = () => setMenuOuvert(!menuOuvert);
 
@@ -27,21 +50,26 @@ const Header = () => {
 
   return (
     <header className="bg-white w-full">
-      {/* Styles de base pour les animations de la bannière */}
+      {/* Style pour l'animation du text-shadow */}
       <style>
         {`
-          @keyframes pulse-scale {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+          @keyframes glowText {
+            0% {
+              text-shadow: 0 0 5px rgba(156,120,91,0.8),
+                         0 0 10px rgba(156,120,91,0.5);
+            }
+            50% {
+              text-shadow: 0 0 20px rgba(156,120,91,1),
+                         0 0 30px rgba(156,120,91,0.8),
+                         0 0 40px rgba(156,120,91,0.6);
+            }
+            100% {
+              text-shadow: 0 0 5px rgba(156,120,91,0.8),
+                         0 0 10px rgba(156,120,91,0.5);
+            }
           }
-          @keyframes glow {
-            0% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.5), 0 0 10px rgba(239, 68, 68, 0.3); }
-            50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 30px rgba(239, 68, 68, 0.5); }
-            100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.5), 0 0 10px rgba(239, 68, 68, 0.3); }
-          }
-          .badge-gratuit {
-            animation: pulse-scale 2s ease-in-out infinite, glow 2s ease-in-out infinite;
+          .animate-glow {
+            animation: glowText 6s ease-in-out infinite;
           }
         `}
       </style>
@@ -92,14 +120,14 @@ const Header = () => {
           </p>
         </article>
       </section>
-
+      {/* ______________________________________________________________________ */}
       {/* Navigation principale */}
       <nav className="background-principale">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 ">
           {/* Logo et navigation */}
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center ">
             {/* Logo */}
-            <Link to="/" className="flex-shrink-0">
+            <Link to="/" className="flex-shrink-0 nav-link">
               <img
                 src="/images/2-1logo.png"
                 alt="Logo Let's Cook"
@@ -132,14 +160,14 @@ const Header = () => {
                 <div className="flex space-x-4">
                   <Link
                     to="/login"
-                    className="btn-site flex items-center gap-2"
+                    className="nav-link flex items-center gap-2 text-white hover:text-[#DCD7C9] transition-colors duration-200"
                   >
                     <FaUser className="w-5 h-5" />
                     <span>Connexion</span>
                   </Link>
                   <Link
                     to="/signup"
-                    className="btn-site flex items-center gap-2"
+                    className="nav-link flex items-center gap-2 text-white hover:text-[#DCD7C9] transition-colors duration-200"
                   >
                     <FaUserPlus className="w-5 h-5" />
                     <span>Inscription</span>
@@ -169,14 +197,14 @@ const Header = () => {
               <div className="space-y-2">
                 <Link
                   to="/login"
-                  className="btn-site flex items-center gap-2 w-full"
+                  className="nav-link flex items-center gap-2 w-full text-white hover:text-[#DCD7C9] transition-colors duration-200"
                 >
                   <FaUser className="w-5 h-5" />
                   <span>Connexion</span>
                 </Link>
                 <Link
                   to="/signup"
-                  className="btn-site flex items-center gap-2 w-full"
+                  className="nav-link flex items-center gap-2 w-full text-white hover:text-[#DCD7C9] transition-colors duration-200"
                 >
                   <FaUserPlus className="w-5 h-5" />
                   <span>Inscription</span>
@@ -186,34 +214,65 @@ const Header = () => {
           </div>
         </div>
 
+        {/* Barre de séparation entre le header et le body */}
+        {/* <div className="relative w-full h-12 shadow-lg"> */}
+        {/* Ajout d'un flou en haut pour adoucir la transition */}
+        {/* <div className="absolute top-0 left-0 w-full h-6 bg-black/20 backdrop-blur-md"></div> */}
+
+        {/* Dégradé horizontal */}
+        {/* <div
+            className="w-full h-full bg-gradient-to-r
+      from-[#010101] from-0%
+      via-[#181510] via-30%
+      via-[#605E57] via-40%
+      via-[#2F2B24] via-60%
+      to-[#4E4A47] to-100%"
+          ></div>
+        </div> */}
+
         {/* Section Hero avec barre de recherche */}
         <section
-          className=" relative min-h-[40vh] flex flex-col items-center justify-center text-center"
+          className="relative min-h-[40vh] flex flex-col items-center justify-center text-center"
           style={{
             backgroundImage: `
-              linear-gradient(
-                to bottom,
-                rgba(0,0,0,0) 0%,
-                rgba(44,54,57,0.1) 85%,
-                rgba(44,54,57,0.95) 100%
-              ),
-              linear-gradient(
-                to left,
-                rgba(255,255,255,0.5) 0%,
-                rgba(255,255,255,0.00) 40%, 
-                rgba(0,0,0,0.99) 100%
-              ),
-              url("/images/header2.png")
-            `,
+      linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 50%,
+        rgba(44,54,57,0.6) 85%,
+        rgba(44,54,57,1) 100%
+      ),
+      linear-gradient(
+        to left,
+        rgba(255,255,255,0.5) 0%,
+        rgba(255,255,255,0.00) 40%, 
+        rgba(46, 57, 59,0.99) 100%
+      ),
+      url("/images/header2.png")
+    `,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
-          <div className="absolute inset-0 bg-black/50" />
+          {/* Fond sombre */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
+
+          {/* Effet de transition entre le header et la section suivante */}
+
+          {/* Contenu par-dessus */}
           <div className="relative z-10 container mx-auto px-4">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
+            {/* Version mobile du titre */}
+            <h1 className="md:hidden text-3xl font-bold text-white mb-8 animate-glow text-center">
               Découvrez nos meilleures recettes
             </h1>
+
+            {/* Version desktop avec effet circulaire */}
+            <h1
+              ref={texteHeroRef}
+              className="hidden md:block text-6xl font-bold text-white mb-8 tracking-[.25em] animate-glow"
+            >
+              Découvrez nos meilleures recettes
+            </h1>
+
             <div className="max-w-2xl mx-auto">
               <SearchBar />
             </div>

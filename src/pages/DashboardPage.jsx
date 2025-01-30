@@ -64,7 +64,8 @@ const DashboardPage = () => {
       instructions: [...prev.instructions, ""],
     }));
   };
-
+  // _______________________________________________________________________________
+  // Gestionnaire d'événements pour le formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -94,10 +95,10 @@ const DashboardPage = () => {
       author: nomUtilisateur,
       createdAt: new Date().toISOString(),
     };
-
+    // _______________________________________________________________________________
     // Utilisation de la fonction du hook pour ajouter la recette
     ajouterRecette(recetteFormatee);
-
+    // _______________________________________________________________________________
     // Réinitialisation du formulaire
     setNouvelleRecette({
       titre: "",
@@ -109,7 +110,8 @@ const DashboardPage = () => {
       imageUrl: "/images/newRecipes.webp",
     });
   };
-
+  // _______________________________________________________________________________
+  // Fonction pour supprimer une recette
   const handleSupprimer = (id) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette recette ?")) {
       supprimerRecette(id);
@@ -117,36 +119,40 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#2C3639]/90 p-4 md:p-8" ref={dashboardRef}>
+    <div
+      className="min-h-screen background-principale shadow-[#4A403A] shadow-2xl rounded-xl p-4 md:p-8"
+      ref={dashboardRef}
+    >
       {/* En-tête */}
       <header className="mb-8">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-4xl font-memoirs text-[#DCD7C9]">
+          <h1 className="text-4xl font-memoirs mx-auto text-[#DCD7C9] titleShadow">
             Tableau de bord
           </h1>
-          <div className="flex gap-4">
-            <HomeButton />
-            <BackButton />
-          </div>
+        </div>
+        <hr className="mt-8 pt-8 border-t border-[#A27B5C] text-center" />
+        <div className="flex gap-4 justify-end">
+          <HomeButton />
+          <BackButton />
         </div>
       </header>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      {/* ____________________________________________________________________________ */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 ">
         {/* Colonne de gauche - Création de recette */}
-        <section className="bg-[#2C3639] rounded-xl p-6 shadow-lg">
-          <h2 className="text-2xl font-memoirs text-[#DCD7C9] mb-6 pb-2 border-b border-[#A27B5C]/30">
+        <section className="bg-[#2C3639] rounded-xl p-6 shadow-lg shadow-inner shadow-orange-900/50">
+          <h2 className="text-2xl font-memoirs text-[#DCD7C9] titleShadow mb-6 pb-2 border-b border-[#A27B5C]/30">
             Créer une nouvelle recette
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Titre */}
             <div className="space-y-2">
-              <label className="block text-[#DCD7C9] text-sm font-medium">
+              <label className="block text-[#DCD7C9] text-sm titleShadow font-medium">
                 Titre de la recette
               </label>
               <input
                 type="text"
-                className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C]"
+                className="inputStyle "
                 value={nouvelleRecette.titre}
                 onChange={(e) =>
                   setNouvelleRecette((prev) => ({
@@ -159,7 +165,7 @@ const DashboardPage = () => {
 
             {/* Difficulté */}
             <div className="space-y-2">
-              <label className="block text-[#DCD7C9] text-sm font-medium">
+              <label className="block text-[#DCD7C9] text-sm font-medium titleShadow">
                 Difficulté
               </label>
               <div className="flex items-center">
@@ -178,12 +184,12 @@ const DashboardPage = () => {
 
             {/* Temps de préparation */}
             <div className="space-y-2">
-              <label className="block text-[#DCD7C9] text-sm font-medium">
+              <label className="block text-[#DCD7C9] text-sm font-medium titleShadow">
                 Temps de préparation (minutes)
               </label>
               <input
                 type="number"
-                className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C]"
+                className="inputStyle"
                 value={nouvelleRecette.tempsPreparation}
                 onChange={(e) =>
                   setNouvelleRecette((prev) => ({
@@ -196,11 +202,11 @@ const DashboardPage = () => {
 
             {/* Description */}
             <div className="space-y-2">
-              <label className="block text-[#DCD7C9] text-sm font-medium">
+              <label className="block text-[#DCD7C9] text-sm font-medium  titleShadow">
                 Description
               </label>
               <textarea
-                className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C] min-h-[100px]"
+                className="inputStyle min-h-[100px]"
                 value={nouvelleRecette.description}
                 onChange={(e) =>
                   setNouvelleRecette((prev) => ({
@@ -213,14 +219,14 @@ const DashboardPage = () => {
 
             {/* Ingrédients */}
             <div className="space-y-2">
-              <label className="block text-[#DCD7C9] text-sm font-medium">
+              <label className="block text-[#DCD7C9] text-sm font-medium titleShadow">
                 Ingrédients
               </label>
               {nouvelleRecette.ingredients.map((ingredient, index) => (
                 <input
                   key={index}
                   type="text"
-                  className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C] mb-2"
+                  className="inputStyle mb-2"
                   value={ingredient}
                   onChange={(e) => {
                     const newIngredients = [...nouvelleRecette.ingredients];
@@ -235,7 +241,7 @@ const DashboardPage = () => {
               <button
                 type="button"
                 onClick={ajouterIngredient}
-                className="flex items-center gap-2 text-[#A27B5C] hover:text-[#DCD7C9] transition-colors"
+                className="flex items-center gap-2 text-[#A27B5C] hover:text-[#DCD7C9] transition-colors titleShadow  border border-[#A27B5C] p-2 rounded-lg"
               >
                 <FaPlus /> Ajouter un ingrédient
               </button>
@@ -243,13 +249,13 @@ const DashboardPage = () => {
 
             {/* Instructions */}
             <div className="space-y-2">
-              <label className="block text-[#DCD7C9] text-sm font-medium">
+              <label className="block text-[#DCD7C9] text-sm font-medium titleShadow">
                 Instructions
               </label>
               {nouvelleRecette.instructions.map((instruction, index) => (
                 <textarea
                   key={index}
-                  className="w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C] mb-2 min-h-[80px]"
+                  className="inputStyle mb-2 min-h-[80px]"
                   value={instruction}
                   onChange={(e) => {
                     const newInstructions = [...nouvelleRecette.instructions];
@@ -264,7 +270,7 @@ const DashboardPage = () => {
               <button
                 type="button"
                 onClick={ajouterInstruction}
-                className="flex items-center gap-2 text-[#A27B5C] hover:text-[#DCD7C9] transition-colors"
+                className="flex items-center gap-2 text-[#A27B5C] hover:text-[#DCD7C9] transition-colors titleShadow border border-[#A27B5C] p-2 rounded-lg"
               >
                 <FaPlus /> Ajouter une instruction
               </button>
@@ -272,25 +278,25 @@ const DashboardPage = () => {
 
             <button
               type="submit"
-              className="w-full bg-[#A27B5C] text-[#DCD7C9] py-3 rounded-lg hover:bg-[#A27B5C]/80 transition-colors font-medium"
+              className="w-full bg-[#A27B5C] text-[#DCD7C9] py-3 rounded-lg hover:bg-[#A27B5C]/80 transition-colors font-medium titleShadow shadow-md shadow-gray-900/50"
             >
               Créer la recette
             </button>
           </form>
         </section>
-
+        {/* ____________________________________________________________________________ */}
         {/* Colonne de droite - Mes recettes */}
-        <section className="bg-[#2C3639] rounded-xl p-6 shadow-lg">
+        <section className="bg-[#2C3639] rounded-xl p-6  shadow-inner shadow-orange-900/50">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-memoirs text-[#DCD7C9]">
+            <h2 className="text-2xl font-memoirs text-[#DCD7C9] titleShadow">
               Mes recettes récentes
             </h2>
-            <span className="text-[#DCD7C9] text-sm">
+            <span className="text-[#DCD7C9] text-sm titleShadow">
               Total : {stats.totalRecettes} recettes
             </span>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 shadow-sm shadow-orange-900/50">
             {mesRecettes.map((recette) => (
               <div
                 key={recette.id}

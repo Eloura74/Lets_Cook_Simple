@@ -1,12 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { FaHome } from 'react-icons/fa'
 
 const HomeButton = () => {
+  const location = useLocation();
+  const isActive = location.pathname === '/';
+
   return (
-    <Link to="/" className="nav-btn">
-      <FaHome className="max-w-5 max-h-5" />
-      <span className="mx-auto pr-4 text-2xl">Accueil</span>
+    <Link to="/" className={`btn-site group ${isActive ? 'active' : ''}`}>
+      <FaHome />
+      <span>Accueil</span>
     </Link>
   )
 }

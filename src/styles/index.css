@@ -14,7 +14,35 @@
   }
 
   .nav-btn {
-    @apply flex items-center gap-2 px-4 py-2 text-content hover:text-accent transition-colors duration-300;
+    @apply flex items-center gap-2 px-4 py-2 border border-[#DCD7C9]/10 text-content hover:text-accent transition-colors duration-300;
+  }
+
+  .nav-button {
+    @apply flex items-center gap-2 px-4 py-2
+           text-[#DCD7C9] font-medium
+           bg-[#2C3639]/80 hover:bg-[#A27B5C]
+           border border-[#DCD7C9]/20 hover:border-[#DCD7C9]
+           rounded-lg
+           shadow-md hover:shadow-lg
+           transition-all duration-300
+           outline-none;
+  }
+
+  .nav-button svg {
+    @apply w-5 h-5 text-[#DCD7C9]
+           transition-transform duration-300
+           group-hover:scale-110;
+  }
+
+  .nav-button span {
+    @apply text-[#DCD7C9] text-base
+           transition-colors duration-300;
+  }
+
+  /* Style pour le bouton actif */
+  .nav-button.active {
+    @apply bg-[#A27B5C]
+           border-[#DCD7C9];
   }
 }
 
@@ -37,4 +65,41 @@
 
 .flex-center {
   @apply flex items-center justify-center;
+}
+
+.img-header::after {
+  height: 100px;
+  background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      rgba(44, 54, 57, 0.6) 85%,
+      rgba(44, 54, 57, 1) 100%
+    ),
+    linear-gradient(
+      to left,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(46, 57, 59, 0.99) 100%
+    );
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  content: "";
+}
+
+.img-header {
+  background-image: url("/images/header2.png");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Texte */
+.titleShadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9), 0 0 30px rgba(220, 215, 201, 0.4);
+}
+
+/*  input dashboard */
+.inputStyle {
+  @apply w-full bg-[#3F4E4F] border border-[#A27B5C]/30 rounded-lg p-2 text-[#DCD7C9] focus:outline-none focus:border-[#A27B5C] shadow-inner shadow-orange-900/50;
 }
