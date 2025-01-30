@@ -6,15 +6,24 @@ import HomeButton from "../components/buttons/HomeButton";
 import BackButton from "../components/buttons/BackButton";
 import useRecettes from "../hooks/useRecettes";
 import Footer from "../components/common/Footer";
+
+/**
+ * Composant DashboardPage - Page principale du tableau de bord utilisateur
+ * Permet la gestion des recettes personnelles (création, visualisation, suppression)
+ * et affiche les statistiques de l'utilisateur
+ */
 const DashboardPage = () => {
-  // Référence pour le scroll
+  // Référence pour gérer le défilement automatique de la page
   const dashboardRef = useRef(null);
 
-  // Utilisation de notre hook personnalisé
-  const { recettes, ajouterRecette, supprimerRecette, getRecettesUtilisateur } =
+  // Récupération des fonctions de gestion des recettes depuis notre hook personnalisé
+  const { ajouterRecette, supprimerRecette, getRecettesUtilisateur } =
     useRecettes();
 
-  // État local pour la nouvelle recette
+  /**
+   * État initial d'une nouvelle recette avec ses propriétés par défaut
+   * Utilisé pour le formulaire de création de recette
+   */
   const [nouvelleRecette, setNouvelleRecette] = useState({
     titre: "",
     description: "",
@@ -25,18 +34,21 @@ const DashboardPage = () => {
     imageUrl: "/images/newRecipes.webp",
   });
 
-  // Récupération du nom d'utilisateur
+  // Récupération de l'identifiant de l'utilisateur depuis le stockage local
   const nomUtilisateur = localStorage.getItem("username");
 
-  // Récupération des recettes de l'utilisateur
+  // Obtention de la liste des recettes créées par l'utilisateur
   const mesRecettes = getRecettesUtilisateur(nomUtilisateur);
 
-  // Statistiques
+  // Calcul des statistiques de l'utilisateur
   const stats = {
     totalRecettes: mesRecettes.length,
   };
 
-  // Effet pour le scroll
+  /**
+   * Effet pour gérer le défilement automatique
+   * Ajuste la position de défilement avec un décalage de 30px vers le haut
+   */
   useEffect(() => {
     if (dashboardRef.current) {
       const yOffset = -30;
@@ -50,7 +62,10 @@ const DashboardPage = () => {
     }
   }, []);
 
-  // Gestionnaires d'événements
+  /**
+   * Fonction pour ajouter un nouvel ingrédient vide à la liste
+   * Utilisée par le bouton d'ajout d'ingrédient
+   */
   const ajouterIngredient = () => {
     setNouvelleRecette((prev) => ({
       ...prev,
@@ -58,17 +73,26 @@ const DashboardPage = () => {
     }));
   };
 
+  /**
+   * Fonction pour ajouter une nouvelle instruction vide à la liste
+   * Utilisée par le bouton d'ajout d'instruction
+   */
   const ajouterInstruction = () => {
     setNouvelleRecette((prev) => ({
       ...prev,
       instructions: [...prev.instructions, ""],
     }));
   };
-  // _______________________________________________________________________________
-  // Gestionnaire d'événements pour le formulaire
+
+  /**
+   * Gestion de la soumission du formulaire de création de recette
+   * Vérifie la validité des données et formate la recette avant l'ajout
+   * @param {Event} e - L'événement de soumission du formulaire
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Validation des champs obligatoires
     if (
       !nouvelleRecette.titre?.trim() ||
       !nouvelleRecette.description?.trim()
@@ -77,7 +101,10 @@ const DashboardPage = () => {
       return;
     }
 
+    // Création d'un identifiant unique basé sur le timestamp
     const newId = Date.now().toString();
+    
+    // Formatage de la recette pour le stockage
     const recetteFormatee = {
       id: newId,
       title: nouvelleRecette.titre,
@@ -95,11 +122,11 @@ const DashboardPage = () => {
       author: nomUtilisateur,
       createdAt: new Date().toISOString(),
     };
-    // _______________________________________________________________________________
-    // Utilisation de la fonction du hook pour ajouter la recette
+
+    // Ajout de la nouvelle recette
     ajouterRecette(recetteFormatee);
-    // _______________________________________________________________________________
-    // Réinitialisation du formulaire
+
+    // Réinitialisation du formulaire après l'ajout
     setNouvelleRecette({
       titre: "",
       description: "",
@@ -110,8 +137,12 @@ const DashboardPage = () => {
       imageUrl: "/images/newRecipes.webp",
     });
   };
-  // _______________________________________________________________________________
-  // Fonction pour supprimer une recette
+
+  /**
+   * Gestion de la suppression d'une recette
+   * Demande confirmation avant la suppression
+   * @param {string} id - L'identifiant de la recette à supprimer
+   */
   const handleSupprimer = (id) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette recette ?")) {
       supprimerRecette(id);
@@ -139,7 +170,7 @@ const DashboardPage = () => {
       {/* ____________________________________________________________________________ */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 ">
         {/* Colonne de gauche - Création de recette */}
-        <section className="bg-[#2C3639] rounded-xl p-6 shadow-lg shadow-inner shadow-orange-900/50">
+        <section className="bg-[#2C3639] rounded-xl p-6 shadow-lg shadow-orange-900/50">
           <h2 className="text-2xl font-memoirs text-[#DCD7C9] titleShadow mb-6 pb-2 border-b border-[#A27B5C]/30">
             Créer une nouvelle recette
           </h2>
@@ -286,7 +317,7 @@ const DashboardPage = () => {
         </section>
         {/* ____________________________________________________________________________ */}
         {/* Colonne de droite - Mes recettes */}
-        <section className="bg-[#2C3639] rounded-xl p-6 shadow-inner shadow-orange-900/50">
+        <section className="bg-[#2C3639] rounded-xl p-6 shadow-lg shadow-orange-900/50">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
             <h2 className="text-2xl font-memoirs text-[#DCD7C9] titleShadow">
               Mes recettes récentes

@@ -52,7 +52,7 @@ const Header = () => {
   return (
     <header className="bg-white w-full">
       {/* Easter Egg Nathan */}
-      {afficherImage && (
+      {/* {afficherImage && (
         <div 
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-[9999]"
           onClick={() => setAfficherImage(false)}
@@ -71,7 +71,7 @@ const Header = () => {
             </button>
           </div>
         </div>
-      )}
+      )} */}
       {/* Style pour l'animation du text-shadow */}
       <style>
         {`
