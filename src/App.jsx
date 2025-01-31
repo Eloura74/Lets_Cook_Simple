@@ -60,6 +60,7 @@ function App() {
                 </RoutePrivee>
               }
             />
+            {/* page de detail */}
             <Route path="/recette/:id" element={<RecipeDetail />} />
           </Routes>
         </main>

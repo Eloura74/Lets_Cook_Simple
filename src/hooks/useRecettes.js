@@ -25,8 +25,8 @@ const useRecettes = () => {
     };
     // ______________________________________________________________________________
     // Sauvegarder dans localStorage
-    const nouvelleListe = [...recettesPerso, recetteComplete];
-    localStorage.setItem("recettesPerso", JSON.stringify(nouvelleListe));
+    const nouvelleListe = [...recettesPerso, recetteComplete]; // Ajouter la nouvelle recette en utilisant la methode spread
+    localStorage.setItem("recettesPerso", JSON.stringify(nouvelleListe)); // Sauvegarder les recettes personnalisées dans le localStorage
     // Mettre à jour l'état
     setRecettes((prev) => [...prev, recetteComplete]);
   };

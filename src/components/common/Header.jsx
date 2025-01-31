@@ -259,7 +259,7 @@ const Header = () => {
         rgba(255,255,255,0.00) 40%, 
         rgba(46, 57, 59,0.99) 100%
       ),
-      url("/images/header2.png")
+      url("/images/header2.webp")
     `,
             backgroundSize: "cover",
             backgroundPosition: "center",

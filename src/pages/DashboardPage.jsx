@@ -10,7 +10,6 @@ import Footer from "../components/common/Footer";
 /**
  * Composant DashboardPage - Page principale du tableau de bord utilisateur
  * Permet la gestion des recettes personnelles (création, visualisation, suppression)
- * et affiche les statistiques de l'utilisateur
  */
 const DashboardPage = () => {
   // Référence pour gérer le défilement automatique de la page
@@ -103,7 +102,7 @@ const DashboardPage = () => {
 
     // Création d'un identifiant unique basé sur le timestamp
     const newId = Date.now().toString();
-    
+
     // Formatage de la recette pour le stockage
     const recetteFormatee = {
       id: newId,
@@ -112,7 +111,9 @@ const DashboardPage = () => {
       difficulty: nouvelleRecette.difficulte,
       prepTime: parseInt(nouvelleRecette.tempsPreparation),
       imageUrl: nouvelleRecette.imageUrl,
+      // Suppression des espaces avant et après
       ingredients: nouvelleRecette.ingredients.filter((i) => i?.trim() !== ""),
+      // Suppression des espaces avant et après
       instructions: nouvelleRecette.instructions.filter(
         (i) => i?.trim() !== ""
       ),
